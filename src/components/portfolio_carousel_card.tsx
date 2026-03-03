@@ -40,61 +40,61 @@ export function PortfolioCarouselCard() {
         ctaLabel: "View case study",
       },
 
-      // 🎨 2) BRANDING PROJECT A
+      // 🎨 2) BRANDING (PROFESSIONAL FAKE)
       {
         kind: "Branding",
-        title: "Brand Identity — Project A",
-        subtitle: "Logo • Visual system • Social kit",
-        href: "/work/branding-a",
+        title: "Summit Strength — Fitness Brand System",
+        subtitle: "Logo suite • Social templates • Brand guidelines",
+        href: "/work/summit-strength",
         imageSrc: "/work/brand-01.png",
-        tags: ["Branding", "Design", "Social"],
+        tags: ["Brand Identity", "Social Kit", "Guidelines"],
         ctaLabel: "View branding",
       },
 
-      // 🎨 3) BRANDING PROJECT B
+      // 🎨 3) BRANDING (PROFESSIONAL FAKE)
       {
         kind: "Branding",
-        title: "Brand Refresh — Project B",
-        subtitle: "Identity overhaul • Asset system • Templates",
-        href: "/work/branding-b",
+        title: "Canyon Dental — Modern Clinic Refresh",
+        subtitle: "New identity • Clean typography • Trust-first design",
+        href: "/work/canyon-dental",
         imageSrc: "/work/brand-02.png",
-        tags: ["Branding", "Identity", "Templates"],
+        tags: ["Rebrand", "Healthcare", "Web-ready"],
         ctaLabel: "View refresh",
       },
 
-      // 🎬 4) PROMO VIDEO 1
+      // 🎬 4) VIDEO (PROFESSIONAL FAKE)
       {
         kind: "Video",
-        title: "Promo Video — Social Cut 1",
-        subtitle: "High-impact hook • Short-form ad (Reels/TikTok/Shorts)",
-        href: "/work/video-1",
+        title: "Altitude Auto — 15s Ad Cut",
+        subtitle: "Hook-first edit • Captions • Mobile-first pacing",
+        href: "/work/altitude-auto-ad",
         videoSrc: "/work/video-01.mp4",
         imageSrc: "/work/video-01-poster.jpg",
-        tags: ["Video", "Promo", "Short-form"],
+        tags: ["Short-form", "Ads", "Motion"],
         ctaLabel: "Watch preview",
       },
 
-      // 🎬 5) PROMO VIDEO 2
+      // 🎬 5) VIDEO (PROFESSIONAL FAKE)
       {
         kind: "Video",
-        title: "Promo Video — Vertical Cut",
-        subtitle: "Mobile-first • Caption-ready • Fast pacing",
-        href: "/work/video-2",
+        title: "Luna Boutique — Reel Promo",
+        subtitle: "Premium vibe • Clean rhythm • Product highlights",
+        href: "/work/luna-boutique-reel",
         videoSrc: "/work/video-02.mp4",
         imageSrc: "/work/video-02-poster.jpg",
-        tags: ["Video", "Ads", "Vertical"],
+        tags: ["Fashion", "Reels", "Premium"],
         ctaLabel: "Watch preview",
       },
 
-      // 🎬 6) PROMO VIDEO 3
+      // 🎬 6) VIDEO (PROFESSIONAL FAKE)
       {
         kind: "Video",
-        title: "Promo Video — Cinematic Cut",
-        subtitle: "Brand-forward • Clean color • Big finish",
-        href: "/work/video-3",
+        title: "Nightwave — Music Video Teaser",
+        subtitle: "Cinematic cut • Color polish • Story beats",
+        href: "/work/nightwave-teaser",
         videoSrc: "/work/video-03.mp4",
         imageSrc: "/work/video-03-poster.jpg",
-        tags: ["Video", "Creative", "Cinematic"],
+        tags: ["Music", "Cinematic", "Color"],
         ctaLabel: "Watch preview",
       },
     ],
@@ -273,7 +273,7 @@ export function PortfolioCarouselCard() {
         </div>
 
         <p className="mt-4 text-xs text-white/55">
-          Swipe to browse. Titles + details appear on every slide.
+          Swipe to browse. Click any slide to open the project page.
         </p>
       </div>
     </div>

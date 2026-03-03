@@ -22,34 +22,34 @@ export function WorkPreview() {
   /**
    * Put files in /public/work/
    * Example:
-   * - /public/work/sports-promo.mp4
-   * - /public/work/sports-promo.jpg
+   * - /public/work/video-01.mp4
+   * - /public/work/video-01-poster.jpg
    */
   const videos: WorkVideo[] = useMemo(
     () => [
       {
-        title: "Sports Promos",
-        note: "High-energy edits + motion graphics built to stop scroll.",
+        title: "Sports Hype Promo",
+        note: "Fast-cut edit with punchy motion, built for Reels/TikTok/Shorts.",
         href: "/work",
         src: "/work/video-01.mp4",
         poster: "/work/video-01-poster.jpg",
         tags: ["Motion", "Hype", "Short-form"],
       },
       {
-        title: "Fashion Promos",
-        note: "Clean, premium pacing with modern typography and polish.",
+        title: "Fashion Launch Reel",
+        note: "Clean pacing, premium text overlays, and product-first storytelling.",
         href: "/work",
         src: "/work/video-02.mp4",
         poster: "/work/video-02-poster.jpg",
         tags: ["Premium", "Brand", "Reels"],
       },
       {
-        title: "Music Videos",
-        note: "Cuts + color + story — built for replay value.",
+        title: "Music Video Teaser",
+        note: "Cinematic cut with color polish and a strong payoff in seconds.",
         href: "/work",
         src: "/work/video-03.mp4",
         poster: "/work/video-03-poster.jpg",
-        tags: ["Edit", "Color", "Story"],
+        tags: ["Cinematic", "Color", "Story"],
       },
     ],
     []
@@ -103,8 +103,8 @@ export function WorkPreview() {
           <div>
             <h2 className="h2">Featured work</h2>
             <p className="p max-w-2xl">
-              Real previews — not placeholders. Swipe through videos and click to view
-              more work.
+              Quick previews of real deliverable styles — motion, pacing, polish, and
+              conversion-first edits.
             </p>
           </div>
 
@@ -141,7 +141,9 @@ export function WorkPreview() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="text-xs text-white/70">Video preview • Click to view</div>
+                    <div className="text-xs text-white/70">
+                      Video preview • Click to view
+                    </div>
                     <div className="mt-1 text-xl font-semibold leading-tight">
                       {current.title}
                     </div>
@@ -206,7 +208,7 @@ export function WorkPreview() {
             </div>
 
             <div className="mt-3 text-xs text-white/55">
-              Tip: Replace the 3 video file paths above with your real clips in{" "}
+              Swap the file paths above with your real clips in{" "}
               <span className="text-white/75">/public/work/</span>.
             </div>
           </div>
@@ -215,7 +217,7 @@ export function WorkPreview() {
         {/* Divider hairline */}
         <div className="mt-10 section-divider" />
 
-        {/* Category tiles (still useful for scanning) */}
+        {/* Category tiles */}
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((t) => (
             <div key={t.title} className="surface hover-lift">
