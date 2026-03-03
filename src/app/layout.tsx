@@ -6,7 +6,8 @@ import { Footer } from "@/components/footer";
 import { FloatingCTA } from "@/components/floating-cta";
 import { CredibilityStrip } from "@/components/credibility-strip";
 
-const siteUrl = "https://zero2sixtymedia.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "https://zero2sixtyllc.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -15,14 +16,14 @@ export const metadata: Metadata = {
     template: "%s — Zero2Sixty Media",
   },
   description:
-    "Premium mobile apps, video production, and branding built for speed and real results.",
+    "Premium apps, high-impact video, and clean branding built for speed and real results.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Zero2Sixty Media",
     description:
-      "Premium mobile apps, video production, and branding built for speed and real results.",
+      "Premium apps, high-impact video, and clean branding built for speed and real results.",
     url: siteUrl,
     siteName: "Zero2Sixty Media",
     type: "website",
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Zero2Sixty Media — Premium apps, video, branding",
+        alt: "Zero2Sixty Media — Apps, Video, Branding",
       },
     ],
   },
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Zero2Sixty Media",
     description:
-      "Premium mobile apps, video production, and branding built for speed and real results.",
+      "Premium apps, high-impact video, and clean branding built for speed and real results.",
     images: ["/twitter-image"],
   },
 };
@@ -54,8 +55,6 @@ export default function RootLayout({
         <CredibilityStrip />
         {children}
         <Footer />
-
-        {/* Sticky conversion CTA (appears after scroll) */}
         <FloatingCTA />
       </body>
     </html>

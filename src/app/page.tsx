@@ -9,23 +9,26 @@ import { ContactCTA } from "@/components/contact-cta";
 import { PortfolioCarouselCard } from "@/components/portfolio_carousel_card";
 import { TestimonialsSection } from "@/components/testimonials-section";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || "https://zero2sixtyllc.com";
+
 export const metadata: Metadata = {
-  title: "Premium apps, video, branding",
+  title: "Zero2Sixty Media — Apps, Video, Branding",
   description:
-    "Launch faster. Look legit. Convert more — with MVP apps, high-impact video, and clean brand assets built for speed and outcomes.",
+    "Premium apps, high-impact video, and clean branding — delivered fast with clear scope and clean pricing.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Zero2Sixty Media",
     description:
-      "Launch faster. Look legit. Convert more — MVP apps, video, and brand assets built for speed and outcomes.",
-    url: "https://zero2sixtymedia.com/",
+      "Premium apps, high-impact video, and clean branding — delivered fast with clear scope and clean pricing.",
+    url: siteUrl,
     type: "website",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Zero2Sixty Media — Premium apps, video, branding",
+        alt: "Zero2Sixty Media — Apps, Video, Branding",
       },
     ],
   },
@@ -52,21 +55,29 @@ export default function HomePage() {
             <div>
               <div className="kicker hint-chip">
                 <span className="h-2 w-2 rounded-full bg-[var(--green)] shadow-[0_0_18px_rgba(57,255,20,0.35)]" />
-                Built for founders, businesses, and creators
+                Direct with Tanner • Fast turnaround • Clear pricing
               </div>
 
               <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl">
-                Launch faster. <span className="text-white/95">Look legit.</span>{" "}
-                Convert more — with{" "}
+                Apps. Video. Branding.
+                <span className="text-white/95"> Built to convert.</span>{" "}
                 <span className="text-[var(--blue)] drop-shadow-[0_0_18px_rgba(79,209,255,0.28)]">
-                  zero fluff.
+                  No fluff.
                 </span>
               </h1>
 
               <p className="p max-w-xl">
-                We build MVP apps, high-impact video, and clean brand assets for
-                people who want results — not agency nonsense or bloated timelines.
+                Zero2Sixty helps founders, small businesses, and creators launch faster and look
+                legit — with real deliverables that drive action: MVP apps, scroll-stopping video,
+                and clean brand assets.
               </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="mini-chip">MVP apps (Flutter / Web)</span>
+                <span className="mini-chip">Promo + ads + reels</span>
+                <span className="mini-chip">Logos + brand kits</span>
+                <span className="mini-chip">Landing pages</span>
+              </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/start" className="btn btn-primary">
@@ -78,14 +89,14 @@ export default function HomePage() {
               </div>
 
               <div className="mt-4 text-xs text-white/55">
-                Direct with Tanner. Clear scope, clear price. No surprises.
+                Clear scope. Clear price. Clean delivery. No surprises.
               </div>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 {[
-                  { k: "MVPs shipped", v: "weeks, not months" },
-                  { k: "Direct builder access", v: "no account managers" },
-                  { k: "Real deliverables", v: "apps, ads, assets" },
+                  { k: "Fast delivery", v: "week-level timelines" },
+                  { k: "Direct builder", v: "no middlemen" },
+                  { k: "Outcome-first", v: "assets made to convert" },
                 ].map((x) => (
                   <div key={x.k} className="surface">
                     <div className="surface-inner p-5">
@@ -94,6 +105,11 @@ export default function HomePage() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-6 text-sm text-white/70">
+                ⚡ Need something quick? Ask about <span className="text-white/90 font-semibold">24-hour turnaround</span>{" "}
+                options for select deliverables.
               </div>
             </div>
 
@@ -109,7 +125,7 @@ export default function HomePage() {
       <PricingSection />
       <ProcessSection />
 
-      {/* ✅ Testimonials */}
+      {/* Testimonials */}
       <TestimonialsSection />
 
       <WorkPreview />
