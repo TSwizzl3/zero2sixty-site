@@ -1,3 +1,4 @@
+// src/components/portfolio_carousel_card.tsx
 "use client";
 
 import Image from "next/image";
@@ -5,12 +6,14 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type PortfolioItem = {
+  kind: "App" | "Branding" | "Video";
   title: string;
   subtitle?: string;
   href: string;
   imageSrc?: string;
   videoSrc?: string;
   tags?: string[];
+  ctaLabel?: string;
 };
 
 function clampIndex(i: number, len: number) {
@@ -28,60 +31,71 @@ export function PortfolioCarouselCard() {
     () => [
       // 🔥 1) REBOUND DATING APP (FLAGSHIP)
       {
+        kind: "App",
         title: "Rebound — Intent-First Dating App",
-        subtitle:
-          "Flutter • Supabase • Match Roulette • Ghost-Proof Messaging",
+        subtitle: "Flutter • Supabase • Match Roulette • Ghost-Proof Messaging",
         href: "/work/rebound",
         imageSrc: "/work/rebound-01.png",
         tags: ["Mobile App", "Startup", "Product", "UX"],
+        ctaLabel: "View case study",
       },
 
       // 🎨 2) BRANDING PROJECT A
       {
+        kind: "Branding",
         title: "Brand Identity — Project A",
-        subtitle: "Logo • Color system • Social kit",
+        subtitle: "Logo • Visual system • Social kit",
         href: "/work/branding-a",
         imageSrc: "/work/brand-01.png",
-        tags: ["Branding", "Design"],
+        tags: ["Branding", "Design", "Social"],
+        ctaLabel: "View branding",
       },
 
       // 🎨 3) BRANDING PROJECT B
       {
+        kind: "Branding",
         title: "Brand Refresh — Project B",
-        subtitle: "Identity overhaul • Asset system",
+        subtitle: "Identity overhaul • Asset system • Templates",
         href: "/work/branding-b",
         imageSrc: "/work/brand-02.png",
-        tags: ["Branding", "Identity"],
+        tags: ["Branding", "Identity", "Templates"],
+        ctaLabel: "View refresh",
       },
 
       // 🎬 4) PROMO VIDEO 1
       {
+        kind: "Video",
         title: "Promo Video — Social Cut 1",
-        subtitle: "High-impact hook • Short-form ad",
+        subtitle: "High-impact hook • Short-form ad (Reels/TikTok/Shorts)",
         href: "/work/video-1",
         videoSrc: "/work/video-01.mp4",
         imageSrc: "/work/video-01-poster.jpg",
-        tags: ["Video", "Promo"],
+        tags: ["Video", "Promo", "Short-form"],
+        ctaLabel: "Watch preview",
       },
 
       // 🎬 5) PROMO VIDEO 2
       {
+        kind: "Video",
         title: "Promo Video — Vertical Cut",
-        subtitle: "Caption-ready • Mobile-first",
+        subtitle: "Mobile-first • Caption-ready • Fast pacing",
         href: "/work/video-2",
         videoSrc: "/work/video-02.mp4",
         imageSrc: "/work/video-02-poster.jpg",
-        tags: ["Video", "Ads"],
+        tags: ["Video", "Ads", "Vertical"],
+        ctaLabel: "Watch preview",
       },
 
       // 🎬 6) PROMO VIDEO 3
       {
+        kind: "Video",
         title: "Promo Video — Cinematic Cut",
-        subtitle: "Brand-forward • High production",
+        subtitle: "Brand-forward • Clean color • Big finish",
         href: "/work/video-3",
         videoSrc: "/work/video-03.mp4",
         imageSrc: "/work/video-03-poster.jpg",
-        tags: ["Video", "Creative"],
+        tags: ["Video", "Creative", "Cinematic"],
+        ctaLabel: "Watch preview",
       },
     ],
     []
@@ -130,7 +144,6 @@ export function PortfolioCarouselCard() {
       onTouchEnd={() => setPaused(false)}
     >
       <div className="surface-inner relative px-6 pt-2 pb-6">
-
         {/* Floating Logo */}
         <div className="pointer-events-none absolute right-3 sm:right-4 top-2">
           <Image
@@ -151,7 +164,6 @@ export function PortfolioCarouselCard() {
         >
           <Link href={current.href} className="block">
             <div className="relative aspect-[16/10] w-full">
-
               {current.videoSrc ? (
                 <video
                   className="absolute inset-0 h-full w-full object-cover"
@@ -176,16 +188,27 @@ export function PortfolioCarouselCard() {
               )}
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+              {/* Badge */}
+              <div className="absolute left-3 top-3">
+                <span className="rounded-full border border-white/10 bg-black/35 px-2.5 py-1 text-[11px] text-white/80 backdrop-blur">
+                  {current.kind}
+                </span>
+              </div>
 
               {/* Text */}
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                <div className="text-xs text-white/65">Click to view</div>
+                <div className="text-xs text-white/70">
+                  {current.videoSrc ? "Video preview • Click to open" : "Click to view"}
+                </div>
+
                 <div className="mt-1 text-lg font-semibold leading-tight">
                   {current.title}
                 </div>
+
                 {current.subtitle && (
-                  <div className="mt-1 text-sm text-white/70">
+                  <div className="mt-1 text-sm text-white/75">
                     {current.subtitle}
                   </div>
                 )}
@@ -202,6 +225,13 @@ export function PortfolioCarouselCard() {
                     ))}
                   </div>
                 )}
+
+                <div className="mt-3 inline-flex items-center gap-2">
+                  <span className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/85">
+                    {current.ctaLabel ?? "View"}
+                  </span>
+                  <span className="text-xs text-white/55">→</span>
+                </div>
               </div>
             </div>
           </Link>
@@ -211,6 +241,7 @@ export function PortfolioCarouselCard() {
             <button
               onClick={() => setIndex((i) => i - 1)}
               className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
+              aria-label="Previous"
             >
               Prev
             </button>
@@ -225,6 +256,7 @@ export function PortfolioCarouselCard() {
                     className={`h-2 w-2 rounded-full ${
                       active ? "bg-white/85" : "bg-white/25 hover:bg-white/40"
                     }`}
+                    aria-label={`Go to slide ${i + 1}`}
                   />
                 );
               })}
@@ -233,6 +265,7 @@ export function PortfolioCarouselCard() {
             <button
               onClick={() => setIndex((i) => i + 1)}
               className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
+              aria-label="Next"
             >
               Next
             </button>
@@ -240,7 +273,7 @@ export function PortfolioCarouselCard() {
         </div>
 
         <p className="mt-4 text-xs text-white/55">
-          Swipe to browse. Click to view full case study.
+          Swipe to browse. Titles + details appear on every slide.
         </p>
       </div>
     </div>
