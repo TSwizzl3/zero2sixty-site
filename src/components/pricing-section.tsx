@@ -8,26 +8,31 @@ export function PricingSection() {
       <div className="container6">
         <h2 className="h2 text-center">Pricing</h2>
         <p className="p max-w-2xl mx-auto text-center">
-          Clear scope. Clear price. No agency games.
+          Offers built to make your brand look bigger, sound better, and convert faster.
+        </p>
+
+        <p className="text-center text-sm text-white/50 mt-2">
+          No contracts. No fluff. Just results that scale your brand.
         </p>
 
         {/* TOP 4 PACKAGES */}
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
           {/* MVP APP */}
           <div className="surface hover-lift">
             <div className="surface-inner p-7 text-center">
               <div className="text-lg font-semibold">MVP App</div>
               <div className="mt-2 text-3xl font-bold">
-                Starting at $2,000
+                Starting at $500
               </div>
               <div className="mt-3 text-sm text-white/65">
-                Mobile or web MVP built for launch.
+                Launch fast with a clean, functional app built to grow.
               </div>
               <ul className="mt-6 space-y-2 text-sm text-white/70">
                 <li>• UI design</li>
                 <li>• Core features</li>
                 <li>• Backend setup</li>
-                <li>• Deployment ready</li>
+                <li>• Launch-ready build</li>
               </ul>
               <Link href="/start" className="btn btn-primary mt-6 w-full">
                 Start Project
@@ -35,46 +40,48 @@ export function PricingSection() {
             </div>
           </div>
 
-          {/* PROMO VIDEO */}
+          {/* VIDEO PRODUCTION */}
           <div className="surface hover-lift">
             <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">Promo Video</div>
+              <div className="text-lg font-semibold">Video Production</div>
               <div className="mt-2 text-3xl font-bold">
-                Starting at $250
+                Starting at $100
               </div>
               <div className="mt-3 text-sm text-white/65">
-                Scroll-stopping social content.
+                High-impact video for any platform, built to grab attention and convert.
               </div>
               <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• 15–60 sec edits</li>
-                <li>• Captions included</li>
-                <li>• Platform formatted</li>
-                <li>• Optimized hooks</li>
+                <li>• Logo reveals</li>
+                <li>• TikTok, Reels, Shorts</li>
+                <li>• Viral business content</li>
+                <li>• Commercial-style edits</li>
+                <li>• Any video style, any platform</li>
               </ul>
               <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Get Video
+                Create Video
               </Link>
             </div>
           </div>
 
-          {/* WEBSITE */}
+          {/* ULTIMATE BRANDING */}
           <div className="surface hover-lift">
             <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">Website</div>
+              <div className="text-lg font-semibold">Ultimate Branding Package</div>
               <div className="mt-2 text-3xl font-bold">
-                Starting at $1,500
+                Starting at $300
               </div>
               <div className="mt-3 text-sm text-white/65">
-                Fast, modern, conversion-focused.
+                A complete brand system built to make your business look premium and established.
               </div>
               <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• Custom layout</li>
-                <li>• SEO basics</li>
-                <li>• Mobile optimized</li>
-                <li>• Live in weeks</li>
+                <li>• Logo package</li>
+                <li>• Color palette</li>
+                <li>• Typography system</li>
+                <li>• Social/profile visuals</li>
+                <li>• Cohesive brand identity</li>
               </ul>
               <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Build Site
+                Build Brand
               </Link>
             </div>
           </div>
@@ -84,16 +91,16 @@ export function PricingSection() {
             <div className="surface-inner p-7 text-center">
               <div className="text-lg font-semibold">Monthly Retainer</div>
               <div className="mt-2 text-3xl font-bold">
-                Starting at $200
+                Starting at $50
               </div>
               <div className="mt-3 text-sm text-white/65">
-                Ongoing creative + dev support.
+                Ongoing creative support for brands that need consistent content and momentum.
               </div>
               <ul className="mt-6 space-y-2 text-sm text-white/70">
                 <li>• Priority turnaround</li>
-                <li>• Small edits included</li>
-                <li>• Strategy support</li>
-                <li>• Direct access</li>
+                <li>• Ongoing edits & content</li>
+                <li>• Fast support access</li>
+                <li>• Built for growth</li>
               </ul>
               <Link href="/start" className="btn btn-primary mt-6 w-full">
                 Work With Me
@@ -102,28 +109,30 @@ export function PricingSection() {
           </div>
         </div>
 
-        {/* CENTERED BRANDING PACKAGE */}
+        {/* STORESOUND RADIO OFFER */}
         <div className="mt-10 flex justify-center">
-          <div className="surface hover-lift max-w-md w-full">
+          <div className="surface hover-lift max-w-md w-full border border-[var(--blue)]/20 shadow-[0_0_40px_rgba(79,209,255,0.15)]">
             <div className="surface-inner p-8 text-center">
-              <div className="text-lg font-semibold">Branding Package</div>
+              <div className="text-lg font-semibold">
+                StoreSound Retail Radio + Commercial
+              </div>
               <div className="mt-2 text-3xl font-bold">
-                Starting at $250
+                Starting at $150
               </div>
               <div className="mt-3 text-sm text-white/65">
-                Complete brand identity built to look established.
+                Put your business on a premium retail radio experience with custom commercials built to be remembered.
               </div>
 
               <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• Primary + secondary logo</li>
-                <li>• Color palette</li>
-                <li>• Typography system</li>
-                <li>• Social profile kit</li>
-                <li>• Brand style guide</li>
+                <li>• Custom commercial production</li>
+                <li>• Sponsor shoutouts</li>
+                <li>• StoreSound-aligned style</li>
+                <li>• Retail-ready audio branding</li>
+                <li>• Ready-to-air delivery</li>
               </ul>
 
               <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Start Branding
+                Get On The Radio
               </Link>
             </div>
           </div>
