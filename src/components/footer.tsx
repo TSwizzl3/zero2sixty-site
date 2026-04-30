@@ -49,7 +49,7 @@ export function Footer() {
               <Link href="/start" className="block text-white/70 hover:text-white transition">
                 Start
               </Link>
-              <Link href="/privacy" className="block text-white/70 hover:text-white transition">
+              <Link href="/privacy-policy" className="block text-white/70 hover:text-white transition">
                 Privacy Policy
               </Link>
             </div>
@@ -91,8 +91,8 @@ export function Footer() {
 
             <div className="flex items-center gap-4 text-white/40">
               <span>Denver-based • Remote-friendly</span>
-              <Link href="/privacy" className="hover:text-white transition">
-                Privacy
+              <Link href="/privacy-policy" className="hover:text-white transition">
+                Privacy Policy
               </Link>
             </div>
           </div>
