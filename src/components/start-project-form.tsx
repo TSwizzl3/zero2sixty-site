@@ -39,8 +39,10 @@ export function StartProjectForm() {
       if (!res.ok) throw new Error("Request failed");
 
       setStatus("success");
-      setMsg("Sent — I’ll reply shortly with your quote + recommended package.");
+      setMsg("Sent — I’ll reply shortly with your quote + recommended direction.");
+
       form.reset();
+
       setProjectType("");
       setBudget("");
     } catch {
@@ -60,38 +62,45 @@ export function StartProjectForm() {
   function projectHint(): { tone: Tone; text: string } | null {
     if (!projectType) return null;
 
-    if (projectType.includes("MVP App")) {
+    if (projectType.includes("Mobile App")) {
       return {
         tone: "blue",
-        text: "Best for launching fast and validating your idea",
+        text: "Perfect for startups, SaaS ideas, and scalable mobile platforms",
       };
     }
 
-    if (projectType.includes("Video Production")) {
+    if (projectType.includes("SaaS")) {
       return {
         tone: "green",
-        text: "Perfect for viral content, ads, and attention-grabbing visuals",
+        text: "Best for scalable dashboards, platforms, and subscription systems",
       };
     }
 
-    if (projectType.includes("Ultimate Branding")) {
+    if (projectType.includes("AI")) {
       return {
         tone: "blue",
-        text: "Best for making your business look premium and established",
+        text: "Ideal for automation, AI workflows, and intelligent systems",
       };
     }
 
-    if (projectType.includes("Monthly Retainer")) {
+    if (projectType.includes("Backend")) {
       return {
         tone: "green",
-        text: "Best for ongoing content and consistent growth",
+        text: "Perfect for APIs, realtime systems, and scalable infrastructure",
       };
     }
 
-    if (projectType.includes("StoreSound")) {
+    if (projectType.includes("UI")) {
+      return {
+        tone: "blue",
+        text: "Best for improving usability, polish, and product presentation",
+      };
+    }
+
+    if (projectType.includes("Branding")) {
       return {
         tone: "green",
-        text: "Get your business heard daily on a retail radio experience",
+        text: "Great for launch assets, visual identity, and marketing support",
       };
     }
 
@@ -105,19 +114,38 @@ export function StartProjectForm() {
     if (!budget) return null;
 
     if (budget === "$20 – $100") {
-      return { tone: "green", text: "Best for StoreSound sponsorship or quick video" };
+      return {
+        tone: "green",
+        text: "Best for small creative or consultation work",
+      };
     }
+
     if (budget === "$100 – $300") {
-      return { tone: "green", text: "Perfect for video production or small branding work" };
+      return {
+        tone: "green",
+        text: "Perfect for branding, UI, or smaller projects",
+      };
     }
+
     if (budget === "$300 – $500") {
-      return { tone: "blue", text: "Great for branding packages or upgrades" };
+      return {
+        tone: "blue",
+        text: "Great for MVPs or smaller app systems",
+      };
     }
+
     if (budget === "$500 – $1,000") {
-      return { tone: "blue", text: "Best fit for MVP apps" };
+      return {
+        tone: "blue",
+        text: "Best fit for larger app or SaaS builds",
+      };
     }
+
     if (budget === "$1,000+") {
-      return { tone: "green", text: "Custom builds or expanded projects" };
+      return {
+        tone: "green",
+        text: "Perfect for full-scale platforms and custom systems",
+      };
     }
 
     return null;
@@ -136,7 +164,9 @@ export function StartProjectForm() {
 
     return (
       <div className="mt-2 flex flex-wrap gap-2">
-        <span className={`hint-chip inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs ${pill}`}>
+        <span
+          className={`hint-chip inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs ${pill}`}
+        >
           <span className={`h-2 w-2 rounded-full ${dot}`} />
           {text}
         </span>
@@ -149,27 +179,45 @@ export function StartProjectForm() {
 
   return (
     <form onSubmit={onSubmit} className="grid gap-4">
-
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className={label}>Name</label>
-          <input name="name" required className={input} placeholder="Your name" />
+
+          <input
+            name="name"
+            required
+            className={input}
+            placeholder="Your name"
+          />
         </div>
 
         <div>
           <label className={label}>Email</label>
-          <input name="email" type="email" required className={input} placeholder="you@email.com" />
+
+          <input
+            name="email"
+            type="email"
+            required
+            className={input}
+            placeholder="you@email.com"
+          />
         </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className={label}>Phone (optional)</label>
-          <input name="phone" className={input} placeholder="Phone number (optional)" />
+
+          <input
+            name="phone"
+            className={input}
+            placeholder="Phone number (optional)"
+          />
         </div>
 
         <div>
           <label className={label}>Project type</label>
+
           <select
             name="projectType"
             required
@@ -177,13 +225,25 @@ export function StartProjectForm() {
             value={projectType}
             onChange={(e) => setProjectType(e.target.value)}
           >
-            <option value="" disabled>Select…</option>
-            <option>MVP App — Starting at $500</option>
-            <option>Video Production — Starting at $100</option>
-            <option>Ultimate Branding Package — Starting at $300</option>
-            <option>Monthly Retainer — Starting at $50</option>
-            <option>StoreSound Retail Radio Sponsorship — $20/month</option>
-            <option>Add-On: 30-Second Commercial — +$25/month</option>
+            <option value="" disabled>
+              Select…
+            </option>
+
+            <option>Mobile App Development</option>
+
+            <option>Full-Stack SaaS Platform</option>
+
+            <option>AI & Automation System</option>
+
+            <option>Backend/API Development</option>
+
+            <option>Realtime Dashboard or Platform</option>
+
+            <option>UI/UX Redesign</option>
+
+            <option>Branding / Creative Support</option>
+
+            <option>Custom Software Project</option>
           </select>
 
           {ph && <HintChip tone={ph.tone} text={ph.text} />}
@@ -193,6 +253,7 @@ export function StartProjectForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className={label}>Budget range</label>
+
           <select
             name="budget"
             required
@@ -200,11 +261,18 @@ export function StartProjectForm() {
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
           >
-            <option value="" disabled>Select…</option>
+            <option value="" disabled>
+              Select…
+            </option>
+
             <option>$20 – $100</option>
+
             <option>$100 – $300</option>
+
             <option>$300 – $500</option>
+
             <option>$500 – $1,000</option>
+
             <option>$1,000+</option>
           </select>
 
@@ -213,12 +281,20 @@ export function StartProjectForm() {
 
         <div>
           <label className={label}>Timeline</label>
+
           <select name="timeline" required className={select}>
-            <option value="" disabled>Select…</option>
+            <option value="" disabled>
+              Select…
+            </option>
+
             <option>ASAP</option>
+
             <option>1–2 weeks</option>
+
             <option>2–4 weeks</option>
+
             <option>1–2 months</option>
+
             <option>Flexible</option>
           </select>
         </div>
@@ -226,11 +302,18 @@ export function StartProjectForm() {
 
       <div>
         <label className={label}>Primary goal</label>
-        <input name="goal" required className={input} placeholder="What are you trying to accomplish?" />
+
+        <input
+          name="goal"
+          required
+          className={input}
+          placeholder="What are you trying to accomplish?"
+        />
       </div>
 
       <div>
         <label className={label}>Project details</label>
+
         <textarea
           name="details"
           required
@@ -245,11 +328,13 @@ export function StartProjectForm() {
       </button>
 
       {msg && (
-        <div className={`rounded-2xl border border-white/10 p-4 text-sm ${
-          status === "success"
-            ? "bg-[var(--green)]/10 text-[var(--green)]"
-            : "bg-red-500/10 text-red-200"
-        }`}>
+        <div
+          className={`rounded-2xl border border-white/10 p-4 text-sm ${
+            status === "success"
+              ? "bg-[var(--green)]/10 text-[var(--green)]"
+              : "bg-red-500/10 text-red-200"
+          }`}
+        >
           {msg}
         </div>
       )}

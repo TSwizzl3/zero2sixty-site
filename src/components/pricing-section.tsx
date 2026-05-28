@@ -2,124 +2,153 @@
 
 import Link from "next/link";
 
+const services = [
+  {
+    title: "Mobile App Development",
+    subtitle: "Flutter • Android • Cross-Platform",
+    description:
+      "Custom mobile applications built with scalable architecture, modern UI/UX, backend systems, authentication, APIs, and production deployment in mind.",
+    features: [
+      "Flutter app development",
+      "Android deployment",
+      "Authentication systems",
+      "Realtime functionality",
+      "API integrations",
+      "Production-ready architecture",
+    ],
+    cta: "Build an App",
+  },
+  {
+    title: "Full-Stack SaaS Platforms",
+    subtitle: "FastAPI • Firebase • Supabase",
+    description:
+      "Modern SaaS and business systems designed for startups, creators, and companies looking to launch scalable digital platforms.",
+    features: [
+      "Backend API systems",
+      "Dashboards & admin tools",
+      "Cloud integrations",
+      "Realtime databases",
+      "Subscription systems",
+      "Scalable infrastructure",
+    ],
+    cta: "Launch a Platform",
+  },
+  {
+    title: "AI & Automation Systems",
+    subtitle: "Automation • AI Tools • Workflow",
+    description:
+      "AI-powered systems and workflow automation tools built to streamline operations, improve efficiency, and create smarter digital products.",
+    features: [
+      "AI-assisted features",
+      "Business automation",
+      "Realtime processing",
+      "Custom workflows",
+      "Internal tool systems",
+      "Productivity integrations",
+    ],
+    cta: "Build AI Systems",
+  },
+  {
+    title: "Creative & Brand Support",
+    subtitle: "Branding • Video • Web",
+    description:
+      "Additional creative services available for startups and businesses needing polished visuals, launch assets, and promotional content.",
+    features: [
+      "Brand identity design",
+      "Promo video editing",
+      "Landing pages",
+      "Social content",
+      "Marketing visuals",
+      "Launch assets",
+    ],
+    cta: "Creative Services",
+  },
+];
+
 export function PricingSection() {
   return (
-    <section className="section">
-      <div className="container6">
-        <h2 className="h2 text-center">Pricing</h2>
-        <p className="p max-w-2xl mx-auto text-center">
-          Offers built to make your brand look bigger, sound better, and convert faster.
-        </p>
+    <section
+      id="services"
+      className="section relative overflow-hidden border-y border-white/10 bg-black/40"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/3 top-0 h-[500px] w-[700px] rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute right-0 top-[300px] h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-3xl" />
+      </div>
 
-        <p className="text-center text-sm text-white/50 mt-2">
-          No contracts. No fluff. Just results that scale your brand.
-        </p>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="surface hover-lift">
-            <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">MVP App</div>
-              <div className="mt-2 text-3xl font-bold">Starting at $500</div>
-              <div className="mt-3 text-sm text-white/65">
-                Launch fast with a clean, functional app built to grow.
-              </div>
-              <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• UI design</li>
-                <li>• Core features</li>
-                <li>• Backend setup</li>
-                <li>• Launch-ready build</li>
-              </ul>
-              <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Start Project
-              </Link>
-            </div>
+      <div className="container6 relative">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--green)]">
+            Services
           </div>
 
-          <div className="surface hover-lift">
-            <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">Video Production</div>
-              <div className="mt-2 text-3xl font-bold">Starting at $100</div>
-              <div className="mt-3 text-sm text-white/65">
-                High-impact video for any platform, built to grab attention and convert.
-              </div>
-              <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• Logo reveals</li>
-                <li>• TikTok, Reels, Shorts</li>
-                <li>• Viral business content</li>
-                <li>• Commercial-style edits</li>
-                <li>• Any video style, any platform</li>
-              </ul>
-              <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Create Video
-              </Link>
-            </div>
-          </div>
+          <h2 className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl">
+            Full-stack product development.
+          </h2>
 
-          <div className="surface hover-lift">
-            <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">Ultimate Branding Package</div>
-              <div className="mt-2 text-3xl font-bold">Starting at $300</div>
-              <div className="mt-3 text-sm text-white/65">
-                Full branding plus a custom website or landing page to give your business a polished, conversion-ready presence.
-              </div>
-              <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• Logo package</li>
-                <li>• Color palette</li>
-                <li>• Typography system</li>
-                <li>• Social/profile visuals</li>
-                <li>• Cohesive brand identity</li>
-                <li>• Custom website or landing page</li>
-              </ul>
-              <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Build Brand
-              </Link>
-            </div>
-          </div>
-
-          <div className="surface hover-lift">
-            <div className="surface-inner p-7 text-center">
-              <div className="text-lg font-semibold">Monthly Retainer</div>
-              <div className="mt-2 text-3xl font-bold">Starting at $50</div>
-              <div className="mt-3 text-sm text-white/65">
-                Ongoing creative support for brands that need consistent content and momentum.
-              </div>
-              <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• Priority turnaround</li>
-                <li>• Ongoing edits & content</li>
-                <li>• Fast support access</li>
-                <li>• Built for growth</li>
-              </ul>
-              <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Work With Me
-              </Link>
-            </div>
-          </div>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/65">
+            Mobile apps, SaaS platforms, AI systems, backend APIs, realtime
+            tools, and polished product experiences built for real launch.
+          </p>
         </div>
 
-        <div className="mt-10 flex justify-center">
-          <div className="surface hover-lift max-w-md w-full border border-[var(--blue)]/20 shadow-[0_0_40px_rgba(79,209,255,0.15)]">
-            <div className="surface-inner p-8 text-center">
-              <div className="text-lg font-semibold">
-                StoreSound Retail Radio Sponsorship
-              </div>
-              <div className="mt-2 text-3xl font-bold">Starting at $20/month</div>
-              <div className="mt-3 text-sm text-white/65">
-                StoreSound is free to listen to and free to use in your store. Find it on Live365 under StoreSound.
-              </div>
+        <div className="mt-16 grid gap-6 lg:grid-cols-2">
+          {services.map((service) => (
+            <div
+              key={service.title}
+              className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 transition duration-300 hover:-translate-y-1 hover:border-white/20"
+            >
+              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl" />
 
-              <ul className="mt-6 space-y-2 text-sm text-white/70">
-                <li>• $20/month to sponsor the station</li>
-                <li>• Includes a business shoutout on-air</li>
-                <li>• Additional $25/month for a full 30-second commercial</li>
-                <li>• Built for retail and small business exposure</li>
-                <li>• Ready-to-air station placement</li>
-              </ul>
+              <div className="relative">
+                <div className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-[var(--green)]">
+                  {service.subtitle}
+                </div>
 
-              <Link href="/start" className="btn btn-primary mt-6 w-full">
-                Sponsor The Station
-              </Link>
+                <h3 className="mt-6 text-3xl font-semibold tracking-tight">
+                  {service.title}
+                </h3>
+
+                <p className="mt-5 text-base leading-8 text-white/65">
+                  {service.description}
+                </p>
+
+                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  {service.features.map((feature) => (
+                    <div
+                      key={feature}
+                      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/70"
+                    >
+                      <span className="h-2 w-2 rounded-full bg-[var(--green)] shadow-[0_0_14px_rgba(57,255,20,0.35)]" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8">
+                  <Link href="/start" className="btn btn-primary inline-flex">
+                    {service.cta}
+                  </Link>
+                </div>
+              </div>
             </div>
+          ))}
+        </div>
+
+        <div className="mt-16 rounded-[2rem] border border-white/10 bg-black/35 p-8 text-center backdrop-blur">
+          <div className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--green)]">
+            Built For Real Launches
           </div>
+
+          <h3 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Production apps over mockups.
+          </h3>
+
+          <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-white/65">
+            The focus is building software that actually ships — mobile apps,
+            SaaS systems, AI-powered tools, realtime platforms, and scalable
+            products that can grow in the real world.
+          </p>
         </div>
       </div>
     </section>

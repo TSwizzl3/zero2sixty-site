@@ -1,237 +1,229 @@
 // src/components/work-preview.tsx
-"use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
 
-type WorkVideo = {
+type ProductPreview = {
   title: string;
-  note: string;
+  category: string;
+  description: string;
   href: string;
-  src: string;
-  poster?: string;
-  tags?: string[];
+  screenshots: string[];
+  tags: string[];
+  accent: "green" | "blue" | "purple" | "pink";
 };
 
-function clampIndex(i: number, len: number) {
-  if (len <= 0) return 0;
-  return ((i % len) + len) % len;
+const products: ProductPreview[] = [
+  {
+    title: "PulseOS",
+    category: "AI Business Operating System",
+    description:
+      "AI-powered business platform featuring calls, campaigns, analytics, customer recovery, live activity, and business automation.",
+    href: "/work/pulseos",
+    screenshots: [
+      "/pulseos/pulse-1.png",
+      "/pulseos/pulse-2.png",
+      "/pulseos/pulse-3.png",
+    ],
+    tags: ["Flutter", "AI Systems", "SaaS", "Analytics"],
+    accent: "green",
+  },
+
+  {
+    title: "DFS Edge",
+    category: "Fantasy Sports Optimization",
+    description:
+      "Realtime DFS app ecosystem with lineup generation, simulations, projections, ownership tools, and multi-sport optimization.",
+    href: "/work/dfs-edge",
+    screenshots: [
+      "/dfs-edge/dfs-1.png",
+      "/dfs-edge/dfs-2.png",
+      "/dfs-edge/dfs-3.png",
+    ],
+    tags: ["FastAPI", "Python", "Algorithms", "Sports Data"],
+    accent: "blue",
+  },
+
+  {
+    title: "Rebound",
+    category: "Social & Matchmaking App",
+    description:
+      "Modern dating and social platform with profiles, matches, events, giveaways, chat systems, and admin moderation tools.",
+    href: "/work/rebound",
+    screenshots: [
+      "/rebound/rebound-1.png",
+      "/rebound/rebound-2.png",
+      "/rebound/rebound-3.png",
+    ],
+    tags: ["Flutter", "Firebase", "Messaging", "Social UX"],
+    accent: "pink",
+  },
+
+  {
+    title: "HypeLoop",
+    category: "Realtime Trend Discovery",
+    description:
+      "Trend intelligence platform with realtime feeds, alerts, analytics, source tracking, and social discovery systems.",
+    href: "/work/hypeloop",
+    screenshots: [
+      "/hypeloop/hypeloop-1.png",
+      "/hypeloop/hypeloop-2.png",
+      "/hypeloop/hypeloop-3.png",
+    ],
+    tags: ["Supabase", "Firebase", "Realtime Feeds", "Analytics"],
+    accent: "purple",
+  },
+];
+
+function accentClasses(accent: ProductPreview["accent"]) {
+  switch (accent) {
+    case "green":
+      return {
+        glow: "bg-[var(--green)]/15",
+        text: "text-[var(--green)]",
+        border: "border-[var(--green)]/25",
+      };
+
+    case "blue":
+      return {
+        glow: "bg-[var(--blue)]/15",
+        text: "text-[var(--blue)]",
+        border: "border-[var(--blue)]/25",
+      };
+
+    case "purple":
+      return {
+        glow: "bg-fuchsia-400/15",
+        text: "text-fuchsia-300",
+        border: "border-fuchsia-300/25",
+      };
+
+    case "pink":
+      return {
+        glow: "bg-pink-400/15",
+        text: "text-pink-300",
+        border: "border-pink-300/25",
+      };
+  }
 }
 
 export function WorkPreview() {
-  /**
-   * Put files in /public/work/
-   * Example:
-   * - /public/work/video-01.mp4
-   * - /public/work/video-01-poster.jpg
-   */
-  const videos: WorkVideo[] = useMemo(
-    () => [
-      {
-        title: "Sports Hype Promo",
-        note: "Fast-cut edit with punchy motion, built for Reels/TikTok/Shorts.",
-        href: "/work",
-        src: "/work/video-01.mp4",
-        poster: "/work/video-01-poster.jpg",
-        tags: ["Motion", "Hype", "Short-form"],
-      },
-      {
-        title: "Fashion Launch Reel",
-        note: "Clean pacing, premium text overlays, and product-first storytelling.",
-        href: "/work",
-        src: "/work/video-02.mp4",
-        poster: "/work/video-02-poster.jpg",
-        tags: ["Premium", "Brand", "Reels"],
-      },
-      {
-        title: "Music Video Teaser",
-        note: "Cinematic cut with color polish and a strong payoff in seconds.",
-        href: "/work",
-        src: "/work/video-03.mp4",
-        poster: "/work/video-03-poster.jpg",
-        tags: ["Cinematic", "Color", "Story"],
-      },
-    ],
-    []
-  );
-
-  const len = videos.length;
-  const [index, setIndex] = useState(0);
-  const current = videos[clampIndex(index, len)];
-
-  const [paused, setPaused] = useState(false);
-  const pausedRef = useRef(false);
-  pausedRef.current = paused;
-
-  useEffect(() => {
-    if (len <= 1) return;
-    const t = setInterval(() => {
-      if (pausedRef.current) return;
-      setIndex((i) => i + 1);
-    }, 7000);
-    return () => clearInterval(t);
-  }, [len]);
-
-  const startX = useRef<number | null>(null);
-
-  function onTouchStart(e: React.TouchEvent) {
-    startX.current = e.touches[0]?.clientX ?? null;
-  }
-
-  function onTouchEnd(e: React.TouchEvent) {
-    if (startX.current == null) return;
-    const endX = e.changedTouches[0]?.clientX ?? startX.current;
-    const dx = endX - startX.current;
-    startX.current = null;
-
-    if (Math.abs(dx) < 45) return;
-    if (dx < 0) setIndex((i) => i + 1);
-    else setIndex((i) => i - 1);
-  }
-
-  const tiles = [
-    { title: "Sports Promos", note: "High-energy edits + motion" },
-    { title: "Fashion Promos", note: "Clean, premium pacing" },
-    { title: "Music Videos", note: "Cuts, color, story" },
-    { title: "Logo Reveals", note: "Brand punch in seconds" },
-  ];
-
   return (
-    <section className="section">
-      <div className="container6">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="h2">Featured work</h2>
-            <p className="p max-w-2xl">
-              Quick previews of real deliverable styles — motion, pacing, polish, and
-              conversion-first edits.
+    <section
+      id="work"
+      className="section relative overflow-hidden border-y border-white/10 bg-black/40"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/4 top-0 h-[600px] w-[700px] rounded-full bg-[var(--blue)]/10 blur-3xl" />
+
+        <div className="absolute right-0 top-[420px] h-[500px] w-[500px] rounded-full bg-[var(--green)]/10 blur-3xl" />
+      </div>
+
+      <div className="container6 relative">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-3xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--green)]">
+              Software Portfolio
+            </div>
+
+            <h2 className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl">
+              Production-ready apps & platforms.
+            </h2>
+
+            <p className="mt-6 text-lg leading-8 text-white/65">
+              Mobile apps, SaaS systems, realtime platforms, AI workflows,
+              startup ecosystems, and scalable backend-driven products built
+              for real launch.
             </p>
           </div>
 
           <Link href="/work" className="btn btn-secondary">
-            View work
+            View full portfolio
           </Link>
         </div>
 
-        {/* Video Carousel */}
-        <div
-          className="mt-8 surface"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
-        >
-          <div className="surface-inner p-5">
-            <div
-              className="rounded-2xl border border-white/10 bg-black/30 overflow-hidden"
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-            >
-              <Link href={current.href} className="block">
-                <div className="relative aspect-video w-full">
-                  <video
-                    className="absolute inset-0 h-full w-full object-cover"
-                    src={current.src}
-                    poster={current.poster}
-                    muted
-                    playsInline
-                    loop
-                    autoPlay
+        <div className="mt-16 grid gap-8">
+          {products.map((product, index) => {
+            const styles = accentClasses(product.accent);
+
+            const reverse = index % 2 === 1;
+
+            return (
+              <Link
+                key={product.title}
+                href={product.href}
+                className="group block"
+              >
+                <article className="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-white/20 lg:p-8">
+                  <div
+                    className={`pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full ${styles.glow} blur-3xl`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="text-xs text-white/70">
-                      Video preview • Click to view
-                    </div>
-                    <div className="mt-1 text-xl font-semibold leading-tight">
-                      {current.title}
-                    </div>
-                    <div className="mt-1 text-sm text-white/75">{current.note}</div>
+                  <div
+                    className={`grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center ${
+                      reverse ? "lg:[&>*:first-child]:order-2" : ""
+                    }`}
+                  >
+                    <div className="relative">
+                      <div
+                        className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold ${styles.border} ${styles.text} bg-white/5`}
+                      >
+                        {product.category}
+                      </div>
 
-                    {current.tags && (
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {current.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-white/75"
-                          >
-                            {t}
+                      <h3 className="mt-6 text-4xl font-semibold tracking-tight">
+                        {product.title}
+                      </h3>
+
+                      <p className="mt-5 max-w-2xl text-base leading-8 text-white/65">
+                        {product.description}
+                      </p>
+
+                      <div className="mt-8 flex flex-wrap gap-2">
+                        {product.tags.map((tag) => (
+                          <span key={tag} className="mini-chip">
+                            {tag}
                           </span>
                         ))}
                       </div>
-                    )}
 
-                    <div className="mt-3 inline-flex items-center gap-2">
-                      <span className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/85">
-                        View more work
-                      </span>
-                      <span className="text-xs text-white/55">→</span>
+                      <div className="mt-10 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85">
+                        Explore case study
+                        <span className="text-white/45">→</span>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div
+                        className={`absolute inset-0 rounded-[3rem] ${styles.glow} blur-3xl`}
+                      />
+
+                      <div className="relative flex items-end justify-center gap-4">
+                        {product.screenshots.map((src, screenIndex) => (
+                          <div
+                            key={src}
+                            className={`overflow-hidden rounded-[1.8rem] border border-white/10 bg-black shadow-2xl transition duration-300 group-hover:border-white/20 ${
+                              screenIndex === 1
+                                ? "z-20 w-[34%] translate-y-0"
+                                : "z-10 hidden w-[28%] translate-y-6 opacity-80 sm:block"
+                            }`}
+                          >
+                            <Image
+                              src={src}
+                              alt={`${product.title} screenshot`}
+                              width={360}
+                              height={760}
+                              className="h-auto w-full object-cover"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </article>
               </Link>
-
-              <div className="flex items-center justify-between px-3 py-2">
-                <button
-                  onClick={() => setIndex((i) => i - 1)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
-                  aria-label="Previous video"
-                >
-                  Prev
-                </button>
-
-                <div className="flex items-center gap-1">
-                  {videos.map((_, i) => {
-                    const active = clampIndex(index, len) === i;
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => setIndex(i)}
-                        className={`h-2 w-2 rounded-full ${
-                          active ? "bg-white/85" : "bg-white/25 hover:bg-white/40"
-                        }`}
-                        aria-label={`Go to video ${i + 1}`}
-                      />
-                    );
-                  })}
-                </div>
-
-                <button
-                  onClick={() => setIndex((i) => i + 1)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
-                  aria-label="Next video"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-3 text-xs text-white/55">
-              Swap the file paths above with your real clips in{" "}
-              <span className="text-white/75">/public/work/</span>.
-            </div>
-          </div>
-        </div>
-
-        {/* Divider hairline */}
-        <div className="mt-10 section-divider" />
-
-        {/* Category tiles */}
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {tiles.map((t) => (
-            <div key={t.title} className="surface hover-lift">
-              <div className="surface-inner sheen-hover p-6">
-                <div className="preview-tile aspect-video w-full rounded-2xl" />
-                <div className="mt-4 font-semibold">{t.title}</div>
-                <div className="mt-1 text-sm text-white/65">{t.note}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 text-xs text-white/55">
-          Want something similar? We’ll recommend scope + pricing after a quick intake.
+            );
+          })}
         </div>
       </div>
     </section>

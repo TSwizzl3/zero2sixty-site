@@ -1,4 +1,3 @@
-// src/components/portfolio_carousel_card.tsx
 "use client";
 
 import Image from "next/image";
@@ -6,14 +5,14 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type PortfolioItem = {
-  kind: "App" | "Branding" | "Video";
   title: string;
-  subtitle?: string;
+  subtitle: string;
   href: string;
-  imageSrc?: string;
-  videoSrc?: string;
-  tags?: string[];
-  ctaLabel?: string;
+  status: string;
+  stack: string[];
+  highlights: string[];
+  accent: "green" | "blue" | "purple" | "orange";
+  ctaLabel: string;
 };
 
 function clampIndex(i: number, len: number) {
@@ -21,242 +20,223 @@ function clampIndex(i: number, len: number) {
   return ((i % len) + len) % len;
 }
 
-export function PortfolioCarouselCard() {
-  /**
-   * ADD YOUR REAL FILES IN:
-   * /public/work/
-   */
+function accentClasses(accent: PortfolioItem["accent"]) {
+  switch (accent) {
+    case "green":
+      return {
+        glow: "bg-[var(--green)]/20",
+        text: "text-[var(--green)]",
+        border: "border-[var(--green)]/30",
+      };
+    case "blue":
+      return {
+        glow: "bg-[var(--blue)]/20",
+        text: "text-[var(--blue)]",
+        border: "border-[var(--blue)]/30",
+      };
+    case "purple":
+      return {
+        glow: "bg-fuchsia-400/20",
+        text: "text-fuchsia-300",
+        border: "border-fuchsia-300/30",
+      };
+    case "orange":
+      return {
+        glow: "bg-orange-400/20",
+        text: "text-orange-300",
+        border: "border-orange-300/30",
+      };
+  }
+}
 
+export function PortfolioCarouselCard() {
   const items: PortfolioItem[] = useMemo(
     () => [
-      // 🔥 1) REBOUND DATING APP (FLAGSHIP)
       {
-        kind: "App",
-        title: "Rebound — Intent-First Dating App",
-        subtitle: "Flutter • Supabase • Match Roulette • Ghost-Proof Messaging",
+        title: "PulseOS",
+        subtitle: "Business operating system for service-based companies.",
+        href: "/#pulseos",
+        status: "Flagship business app",
+        stack: ["Flutter", "SaaS", "Dashboards", "Client Ops"],
+        highlights: ["CRM-style workflow", "Business tools", "Built for real clients"],
+        accent: "green",
+        ctaLabel: "View PulseOS",
+      },
+      {
+        title: "DFS Edge",
+        subtitle: "Fantasy sports optimizer with simulations and lineup logic.",
+        href: "/work",
+        status: "Live app ecosystem",
+        stack: ["Flutter", "FastAPI", "Python", "Algorithms"],
+        highlights: ["MLB/NFL/NBA/NHL", "Lineup optimizer", "Subscription-ready"],
+        accent: "blue",
+        ctaLabel: "View DFS Edge",
+      },
+      {
+        title: "HypeLoop",
+        subtitle: "Trend discovery platform with feeds, alerts, and analytics.",
+        href: "/work",
+        status: "Startup product",
+        stack: ["Flutter", "Supabase", "Firebase", "APIs"],
+        highlights: ["Realtime feeds", "Push alerts", "Admin analytics"],
+        accent: "purple",
+        ctaLabel: "View HypeLoop",
+      },
+      {
+        title: "Rebound",
+        subtitle: "Intent-first dating app built and launched on Android.",
         href: "/work/rebound",
-        imageSrc: "/work/rebound-01.png",
-        tags: ["Mobile App", "Startup", "Product", "UX"],
-        ctaLabel: "View case study",
-      },
-
-      // 🎨 2) BRANDING (PROFESSIONAL FAKE)
-      {
-        kind: "Branding",
-        title: "Summit Strength — Fitness Brand System",
-        subtitle: "Logo suite • Social templates • Brand guidelines",
-        href: "/work/summit-strength",
-        imageSrc: "/work/brand-01.png",
-        tags: ["Brand Identity", "Social Kit", "Guidelines"],
-        ctaLabel: "View branding",
-      },
-
-      // 🎨 3) BRANDING (PROFESSIONAL FAKE)
-      {
-        kind: "Branding",
-        title: "Canyon Dental — Modern Clinic Refresh",
-        subtitle: "New identity • Clean typography • Trust-first design",
-        href: "/work/canyon-dental",
-        imageSrc: "/work/brand-02.png",
-        tags: ["Rebrand", "Healthcare", "Web-ready"],
-        ctaLabel: "View refresh",
-      },
-
-      // 🎬 4) VIDEO (PROFESSIONAL FAKE)
-      {
-        kind: "Video",
-        title: "Altitude Auto — 15s Ad Cut",
-        subtitle: "Hook-first edit • Captions • Mobile-first pacing",
-        href: "/work/altitude-auto-ad",
-        videoSrc: "/work/video-01.mp4",
-        imageSrc: "/work/video-01-poster.jpg",
-        tags: ["Short-form", "Ads", "Motion"],
-        ctaLabel: "Watch preview",
-      },
-
-      // 🎬 5) VIDEO (PROFESSIONAL FAKE)
-      {
-        kind: "Video",
-        title: "Luna Boutique — Reel Promo",
-        subtitle: "Premium vibe • Clean rhythm • Product highlights",
-        href: "/work/luna-boutique-reel",
-        videoSrc: "/work/video-02.mp4",
-        imageSrc: "/work/video-02-poster.jpg",
-        tags: ["Fashion", "Reels", "Premium"],
-        ctaLabel: "Watch preview",
-      },
-
-      // 🎬 6) VIDEO (PROFESSIONAL FAKE)
-      {
-        kind: "Video",
-        title: "Nightwave — Music Video Teaser",
-        subtitle: "Cinematic cut • Color polish • Story beats",
-        href: "/work/nightwave-teaser",
-        videoSrc: "/work/video-03.mp4",
-        imageSrc: "/work/video-03-poster.jpg",
-        tags: ["Music", "Cinematic", "Color"],
-        ctaLabel: "Watch preview",
+        status: "Google Play launch",
+        stack: ["Flutter", "Supabase", "Firebase", "Auth"],
+        highlights: ["User accounts", "Messaging flow", "Production deployment"],
+        accent: "orange",
+        ctaLabel: "View Rebound",
       },
     ],
     []
   );
 
   const [index, setIndex] = useState(0);
-  const len = items.length;
-  const current = items[clampIndex(index, len)];
-
   const [paused, setPaused] = useState(false);
   const pausedRef = useRef(false);
   pausedRef.current = paused;
 
+  const len = items.length;
+  const current = items[clampIndex(index, len)];
+  const styles = accentClasses(current.accent);
+
   useEffect(() => {
     if (len <= 1) return;
-    const t = setInterval(() => {
-      if (pausedRef.current) return;
-      setIndex((i) => i + 1);
+
+    const timer = setInterval(() => {
+      if (!pausedRef.current) {
+        setIndex((i) => i + 1);
+      }
     }, 6500);
-    return () => clearInterval(t);
+
+    return () => clearInterval(timer);
   }, [len]);
-
-  const startX = useRef<number | null>(null);
-
-  function onTouchStart(e: React.TouchEvent) {
-    startX.current = e.touches[0]?.clientX ?? null;
-  }
-
-  function onTouchEnd(e: React.TouchEvent) {
-    if (startX.current == null) return;
-    const endX = e.changedTouches[0]?.clientX ?? startX.current;
-    const dx = endX - startX.current;
-    startX.current = null;
-
-    if (Math.abs(dx) < 45) return;
-    if (dx < 0) setIndex((i) => i + 1);
-    else setIndex((i) => i - 1);
-  }
 
   return (
     <div
       className="surface"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
     >
-      <div className="surface-inner relative px-6 pt-2 pb-6">
-        {/* Floating Logo */}
-        <div className="pointer-events-none absolute right-3 sm:right-4 top-2">
+      <div className="surface-inner relative overflow-hidden p-6">
+        <div className={`pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full ${styles.glow} blur-3xl`} />
+        <div className={`pointer-events-none absolute -bottom-24 -left-20 h-72 w-72 rounded-full ${styles.glow} blur-3xl`} />
+
+        <div className="pointer-events-none absolute right-4 top-3 opacity-90">
           <Image
             src="/brand/logo_mark.png"
             alt="Zero2Sixty Media"
             width={600}
             height={600}
             priority
-            className="h-24 sm:h-28 md:h-32 w-auto object-contain select-none"
+            className="h-24 w-auto select-none object-contain sm:h-28 md:h-32"
           />
         </div>
 
-        {/* Carousel */}
-        <div
-          className="mt-1 rounded-2xl border border-white/10 bg-black/30 overflow-hidden"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <Link href={current.href} className="block">
-            <div className="relative aspect-[16/10] w-full">
-              {current.videoSrc ? (
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
-                  src={current.videoSrc}
-                  poster={current.imageSrc}
-                  muted
-                  playsInline
-                  loop
-                  autoPlay
-                />
-              ) : current.imageSrc ? (
-                <Image
-                  src={current.imageSrc}
-                  alt={current.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 520px"
-                  priority
-                />
-              ) : (
-                <div className="absolute inset-0 bg-white/10" />
-              )}
+        <div className="relative rounded-3xl border border-white/10 bg-black/40 p-5">
+          <div className="flex items-center justify-between gap-4">
+            <span className={`rounded-full border ${styles.border} bg-white/5 px-3 py-1 text-xs font-semibold ${styles.text}`}>
+              {current.status}
+            </span>
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <span className="text-xs text-white/45">
+              {clampIndex(index, len) + 1} / {len}
+            </span>
+          </div>
 
-              {/* Badge */}
-              <div className="absolute left-3 top-3">
-                <span className="rounded-full border border-white/10 bg-black/35 px-2.5 py-1 text-[11px] text-white/80 backdrop-blur">
-                  {current.kind}
-                </span>
+          <Link href={current.href} className="mt-8 block">
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/[0.03] to-black p-6">
+              <div className={`absolute inset-x-8 top-8 h-24 rounded-full ${styles.glow} blur-3xl`} />
+
+              <div className="relative">
+                <div className="mx-auto flex h-[340px] max-w-[230px] flex-col rounded-[2.2rem] border border-white/15 bg-black p-3 shadow-2xl">
+                  <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-white/20" />
+
+                  <div className="flex flex-1 flex-col overflow-hidden rounded-[1.6rem] border border-white/10 bg-zinc-950 p-4">
+                    <div className={`mb-4 h-20 rounded-2xl border ${styles.border} ${styles.glow}`} />
+
+                    <div className="space-y-2">
+                      <div className="h-3 w-24 rounded-full bg-white/70" />
+                      <div className="h-2 w-full rounded-full bg-white/20" />
+                      <div className="h-2 w-4/5 rounded-full bg-white/15" />
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-2 gap-2">
+                      <div className="h-16 rounded-2xl bg-white/10" />
+                      <div className="h-16 rounded-2xl bg-white/10" />
+                    </div>
+
+                    <div className="mt-auto space-y-2">
+                      <div className={`h-10 rounded-2xl ${styles.glow} border ${styles.border}`} />
+                      <div className="h-10 rounded-2xl bg-white/10" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <h3 className="text-2xl font-semibold tracking-tight text-white">
+                {current.title}
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-white/70">
+                {current.subtitle}
+              </p>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {current.stack.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-white/75"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
 
-              {/* Text */}
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <div className="text-xs text-white/70">
-                  {current.videoSrc ? "Video preview • Click to open" : "Click to view"}
-                </div>
-
-                <div className="mt-1 text-lg font-semibold leading-tight">
-                  {current.title}
-                </div>
-
-                {current.subtitle && (
-                  <div className="mt-1 text-sm text-white/75">
-                    {current.subtitle}
+              <div className="mt-5 space-y-2">
+                {current.highlights.map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-sm text-white/70">
+                    <span className={`h-1.5 w-1.5 rounded-full ${styles.glow}`} />
+                    {item}
                   </div>
-                )}
+                ))}
+              </div>
 
-                {current.tags && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {current.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-white/75"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <div className="mt-3 inline-flex items-center gap-2">
-                  <span className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/85">
-                    {current.ctaLabel ?? "View"}
-                  </span>
-                  <span className="text-xs text-white/55">→</span>
-                </div>
+              <div className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/85">
+                {current.ctaLabel}
+                <span className="text-white/45">→</span>
               </div>
             </div>
           </Link>
 
-          {/* Controls */}
-          <div className="flex items-center justify-between px-3 py-2">
+          <div className="mt-6 flex items-center justify-between">
             <button
               onClick={() => setIndex((i) => i - 1)}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
-              aria-label="Previous"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80 hover:bg-white/10"
+              aria-label="Previous project"
             >
               Prev
             </button>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               {items.map((_, i) => {
                 const active = clampIndex(index, len) === i;
+
                 return (
                   <button
                     key={i}
                     onClick={() => setIndex(i)}
-                    className={`h-2 w-2 rounded-full ${
-                      active ? "bg-white/85" : "bg-white/25 hover:bg-white/40"
+                    className={`h-2 w-2 rounded-full transition ${
+                      active ? "bg-white/90" : "bg-white/25 hover:bg-white/40"
                     }`}
-                    aria-label={`Go to slide ${i + 1}`}
+                    aria-label={`Go to project ${i + 1}`}
                   />
                 );
               })}
@@ -264,8 +244,8 @@ export function PortfolioCarouselCard() {
 
             <button
               onClick={() => setIndex((i) => i + 1)}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80 hover:bg-white/10"
-              aria-label="Next"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80 hover:bg-white/10"
+              aria-label="Next project"
             >
               Next
             </button>
@@ -273,7 +253,7 @@ export function PortfolioCarouselCard() {
         </div>
 
         <p className="mt-4 text-xs text-white/55">
-          Swipe to browse. Click any slide to open the project page.
+          Built products, not just mockups. Swipe through launched and in-progress app systems.
         </p>
       </div>
     </div>

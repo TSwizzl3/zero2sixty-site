@@ -1,254 +1,329 @@
 // src/app/work/page.tsx
+
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Portfolio — Zero2Sixty Media",
   description:
-    "A snapshot of recent-style deliverables: promo video, motion, app UI, and brand assets — shipped fast and clean.",
-  alternates: {
-    canonical: "/work",
-  },
-  openGraph: {
-    title: "Work — Zero2Sixty Media",
+    "Production-ready mobile apps, SaaS platforms, and full-stack systems built with Flutter, FastAPI, Firebase, and modern backend infrastructure.",
+};
+
+const projects = [
+  {
+    title: "PulseOS",
+    category: "AI Business Operating System",
+    status: "Flagship SaaS Platform",
     description:
-      "Promo video, motion, app UI, and brand assets — shipped fast and clean.",
-    url: "https://zero2sixtymedia.com/work",
-    type: "website",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Zero2Sixty Media — Work",
-      },
+      "AI-powered business operating system featuring automation, campaigns, analytics, live dashboards, AI workflows, customer management, and scalable operational systems.",
+    stack: [
+      "Flutter",
+      "FastAPI",
+      "Firebase",
+      "Realtime Systems",
+      "AI Workflows",
+      "SaaS",
     ],
+    screenshots: [
+      "/pulseos/pulse-1.png",
+      "/pulseos/pulse-2.png",
+      "/pulseos/pulse-3.png",
+    ],
+    accent: "green",
   },
-  twitter: {
-    card: "summary_large_image",
-    images: ["/twitter-image"],
-  },
-};
 
-type WorkCategory = "All" | "Video" | "Motion" | "App" | "Design";
+  {
+    title: "DFS Edge",
+    category: "Fantasy Sports Optimization",
+    status: "Live Multi-Sport Platform",
+    description:
+      "Advanced DFS ecosystem with lineup generation, tournament simulations, ownership analysis, realtime slate systems, and multi-sport optimization tools.",
+    stack: [
+      "Flutter",
+      "FastAPI",
+      "Python",
+      "Algorithms",
+      "Simulation Systems",
+      "Realtime Data",
+    ],
+    screenshots: [
+      "/dfs-edge/dfs-1.png",
+      "/dfs-edge/dfs-2.png",
+      "/dfs-edge/dfs-3.png",
+    ],
+    accent: "blue",
+  },
 
-type WorkItem = {
-  title: string;
-  category: Exclude<WorkCategory, "All">;
-  summary: string;
-  bullets: string[];
-  outcome?: string;
-  href?: string; // optional, swap in later
-};
+  {
+    title: "HypeLoop",
+    category: "Realtime Trend Discovery",
+    status: "Startup Product",
+    description:
+      "Realtime trend intelligence platform with live feeds, push notifications, analytics, ingestion systems, and social monitoring infrastructure.",
+    stack: [
+      "Flutter",
+      "Supabase",
+      "Firebase",
+      "Realtime APIs",
+      "Push Notifications",
+      "Analytics",
+    ],
+    screenshots: [
+      "/hypeloop/hypeloop-1.png",
+      "/hypeloop/hypeloop-2.png",
+      "/hypeloop/hypeloop-3.png",
+    ],
+    accent: "purple",
+  },
 
-const ITEMS: WorkItem[] = [
   {
-    title: "Sports Promo",
-    category: "Video",
-    summary: "High-energy edit built to hit hard in the first 2 seconds.",
-    bullets: ["Hook + pacing", "Captions + punch-ins", "Social-ready exports"],
-    outcome: "Designed to stop scroll and drive clicks.",
-  },
-  {
-    title: "Fashion Show Teaser",
-    category: "Video",
-    summary: "Clean, premium pacing with tight cutdowns for socials.",
-    bullets: ["Vertical + widescreen versions", "Beat-synced edits", "Ad-ready cutdowns"],
-    outcome: "Premium look without over-editing.",
-  },
-  {
-    title: "Music Video Cut",
-    category: "Video",
-    summary: "Story-forward cuts with color + motion accents where it matters.",
-    bullets: ["Color polish", "Motion accents", "Performance + story balance"],
-    outcome: "Feels intentional — not random cuts.",
-  },
-  {
-    title: "Logo Reveal",
-    category: "Motion",
-    summary: "Short, clean brand punch built for intros and ads.",
-    bullets: ["1–3 second reveal options", "Audio-ready timing", "Multiple aspect ratios"],
-    outcome: "A quick hit that looks expensive.",
-  },
-  {
-    title: "App UI Demo",
-    category: "App",
-    summary: "MVP flow walkthrough for pitching or early users.",
-    bullets: ["Core screens only", "Clear UX path", "Fast iteration changes"],
-    outcome: "Show the product without a full build-out.",
-  },
-  {
-    title: "Brand Kit",
-    category: "Design",
-    summary: "Logo + palette + basic assets to look established fast.",
-    bullets: ["Primary + secondary marks", "Color + type direction", "Social starter assets"],
-    outcome: "Instant upgrade in credibility.",
+    title: "Rebound",
+    category: "Dating & Social App",
+    status: "Google Play Launch",
+    description:
+      "Modern social and dating platform featuring authentication, profiles, messaging systems, mobile-first UX, and production Android deployment.",
+    stack: [
+      "Flutter",
+      "Firebase",
+      "Supabase",
+      "Authentication",
+      "Messaging",
+      "Android",
+    ],
+    screenshots: [
+      "/rebound/rebound-1.png",
+      "/rebound/rebound-2.png",
+      "/rebound/rebound-3.png",
+    ],
+    accent: "pink",
   },
 ];
 
-const CATEGORIES: WorkCategory[] = ["All", "Video", "Motion", "App", "Design"];
+function accentClasses(accent: string) {
+  switch (accent) {
+    case "green":
+      return {
+        glow: "bg-[var(--green)]/15",
+        text: "text-[var(--green)]",
+        border: "border-[var(--green)]/25",
+      };
 
-function buildHrefWithCategory(category: WorkCategory) {
-  if (category === "All") return "/work";
-  return `/work?cat=${encodeURIComponent(category)}`;
+    case "blue":
+      return {
+        glow: "bg-[var(--blue)]/15",
+        text: "text-[var(--blue)]",
+        border: "border-[var(--blue)]/25",
+      };
+
+    case "purple":
+      return {
+        glow: "bg-fuchsia-400/15",
+        text: "text-fuchsia-300",
+        border: "border-fuchsia-300/25",
+      };
+
+    case "pink":
+      return {
+        glow: "bg-pink-400/15",
+        text: "text-pink-300",
+        border: "border-pink-300/25",
+      };
+
+    default:
+      return {
+        glow: "bg-white/10",
+        text: "text-white",
+        border: "border-white/10",
+      };
+  }
 }
 
-function readCategory(searchParams: { [key: string]: string | string[] | undefined }): WorkCategory {
-  const raw = searchParams.cat;
-  const v = Array.isArray(raw) ? raw[0] : raw;
-
-  if (!v) return "All";
-  const normalized = String(v).trim();
-
-  if (CATEGORIES.includes(normalized as WorkCategory)) return normalized as WorkCategory;
-  return "All";
-}
-
-export default function WorkPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const active = readCategory(searchParams);
-
-  const visible =
-    active === "All" ? ITEMS : ITEMS.filter((x) => x.category === active);
-
+export default function WorkPage() {
   return (
-    <main className="section">
-      <div className="container6">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
-              Work
+    <main className="relative overflow-hidden">
+      {/* BACKGROUND */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="bg-grid absolute inset-0 opacity-[0.03]" />
+
+        <div className="absolute left-1/2 top-0 h-[700px] w-[1200px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl" />
+
+        <div className="absolute left-1/3 top-[700px] h-[600px] w-[700px] rounded-full bg-emerald-500/10 blur-3xl" />
+
+        <div className="absolute right-0 top-[1200px] h-[500px] w-[500px] rounded-full bg-fuchsia-500/10 blur-3xl" />
+      </div>
+
+      {/* HERO */}
+      <section className="relative border-b border-white/10">
+        <div className="container6 py-24 sm:py-32">
+          <div className="max-w-5xl">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-[var(--green)] shadow-[0_0_16px_rgba(57,255,20,0.45)]" />
+
+              <span className="text-sm font-medium text-white/70">
+                Mobile Apps • SaaS Platforms • AI Systems • Full-Stack Products
+              </span>
+            </div>
+
+            <h1 className="mt-8 text-5xl font-semibold leading-[0.95] tracking-tight sm:text-7xl">
+              Software
+              <span className="bg-gradient-to-r from-cyan-300 via-white to-emerald-300 bg-clip-text text-transparent">
+                {" "}
+                Portfolio
+              </span>
             </h1>
-            <p className="p max-w-2xl">
-              A snapshot of the kinds of deliverables we ship — clean execution,
-              premium look, and built for outcomes. As you send links, we’ll swap
-              these tiles into real embeds and case-style cards.
+
+            <p className="mt-8 max-w-4xl text-lg leading-8 text-white/68">
+              Production-ready applications, realtime systems, startup
+              platforms, and scalable SaaS ecosystems designed and developed
+              using Flutter, FastAPI, Firebase, Supabase, and modern cloud
+              architecture.
             </p>
           </div>
-
-          <Link href="/start" className="btn btn-primary">
-            Start a project
-          </Link>
         </div>
+      </section>
 
-        {/* Filter */}
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          {CATEGORIES.map((c) => {
-            const isActive = c === active;
+      {/* PROJECTS */}
+      <section className="relative py-24">
+        <div className="container6 space-y-12">
+          {projects.map((project, index) => {
+            const styles = accentClasses(project.accent);
+
+            const reverse = index % 2 === 1;
+
             return (
-              <Link
-                key={c}
-                href={buildHrefWithCategory(c)}
-                className={[
-                  "rounded-full border px-3 py-1 text-xs font-semibold transition",
-                  isActive
-                    ? "border-white/25 bg-white/10 text-white"
-                    : "border-white/12 bg-white/5 text-white/70 hover:border-white/20 hover:bg-white/8 hover:text-white",
-                ].join(" ")}
+              <div
+                key={project.title}
+                className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-7 backdrop-blur transition duration-300 hover:border-white/20 lg:p-10"
               >
-                {c}
-              </Link>
+                <div
+                  className={`pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full ${styles.glow} blur-3xl`}
+                />
+
+                <div
+                  className={`grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center ${
+                    reverse ? "lg:[&>*:first-child]:order-2" : ""
+                  }`}
+                >
+                  {/* LEFT */}
+                  <div className="relative">
+                    <div
+                      className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold ${styles.border} ${styles.text} bg-white/5`}
+                    >
+                      {project.status}
+                    </div>
+
+                    <h2 className="mt-6 text-5xl font-semibold tracking-tight">
+                      {project.title}
+                    </h2>
+
+                    <div className="mt-3 text-sm uppercase tracking-[0.2em] text-white/40">
+                      {project.category}
+                    </div>
+
+                    <p className="mt-7 max-w-2xl text-lg leading-8 text-white/65">
+                      {project.description}
+                    </p>
+
+                    {/* STACK */}
+                    <div className="mt-8 flex flex-wrap gap-2">
+                      {project.stack.map((tag) => (
+                        <span key={tag} className="mini-chip">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-10 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85">
+                      Production-ready system
+                    </div>
+                  </div>
+
+                  {/* RIGHT */}
+                  <div className="relative flex justify-center">
+                    <div
+                      className={`absolute inset-0 rounded-[3rem] ${styles.glow} blur-3xl`}
+                    />
+
+                    <div className="relative flex items-end justify-center gap-4">
+                      {project.screenshots.map((src, screenIndex) => (
+                        <div
+                          key={src}
+                          className={`overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-2xl transition duration-500 group-hover:-translate-y-1 group-hover:border-white/20 ${
+                            screenIndex === 1
+                              ? "z-20 w-[36%]"
+                              : "z-10 hidden w-[30%] translate-y-8 opacity-80 sm:block"
+                          }`}
+                        >
+                          <Image
+                            src={src}
+                            alt={`${project.title} screenshot`}
+                            width={400}
+                            height={900}
+                            className="h-auto w-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             );
           })}
-
-          <div className="ml-auto hidden md:block text-xs text-white/45">
-            Tip: click a category to focus the grid.
-          </div>
         </div>
+      </section>
 
-        {/* Grid */}
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((it) => (
-            <div key={it.title} className="surface hover-lift">
-              <div className="surface-inner sheen-hover p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <h3 className="font-semibold">{it.title}</h3>
-                    <div className="mt-1 text-sm text-white/65 leading-relaxed">
-                      {it.summary}
-                    </div>
-                  </div>
-                  <span className="tag text-white/75">{it.category}</span>
-                </div>
-
-                {/* Placeholder media block (no images required yet) */}
-                <div className="mt-4 aspect-video w-full rounded-2xl border border-white/10 bg-black/30">
-                  <div className="h-full w-full rounded-2xl bg-white/5" />
-                </div>
-
-                <div className="mt-4 grid gap-2 text-sm text-white/78">
-                  {it.bullets.map((b) => (
-                    <div key={b} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--blue)] shadow-[0_0_12px_rgba(79,209,255,0.22)]" />
-                      <span className="leading-relaxed">{b}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {it.outcome ? (
-                  <p className="mt-4 text-xs text-white/55">{it.outcome}</p>
-                ) : null}
-
-                {it.href ? (
-                  <div className="mt-5">
-                    <Link
-                      href={it.href}
-                      className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white"
-                    >
-                      View
-                      <span aria-hidden className="text-white/40">
-                        →
-                      </span>
-                    </Link>
-                  </div>
-                ) : null}
-              </div>
+      {/* HIRE SECTION */}
+      <section className="relative border-t border-white/10 bg-black/40">
+        <div className="container6 py-24">
+          <div className="max-w-5xl">
+            <div className="text-sm font-semibold uppercase tracking-[0.25em] text-[var(--green)]">
+              Available For
             </div>
-          ))}
-        </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-10 surface hover-lift">
-          <div className="surface-inner sheen-hover p-7">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="text-lg font-semibold">
-                  Want your Work page stacked fast?
-                </div>
-                <p className="mt-2 text-sm text-white/65 leading-relaxed max-w-2xl">
-                  Send 6–12 links (YouTube/Vimeo/Drive) and we’ll format this page
-                  with real embeds, categories, and clean thumbnails — still on
-                  brand with your black + neon look.
-                </p>
-                <div className="mt-3 text-xs text-white/55">
-                  If you don’t have links yet, send raw files — we’ll handle export
-                  sizes and platform-ready versions.
-                </div>
-              </div>
+            <h2 className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl">
+              App development, SaaS systems, and full-stack product builds.
+            </h2>
 
-              <div className="flex flex-wrap gap-3">
-                <Link href="/start" className="btn btn-primary">
-                  Start a project
-                </Link>
-                <a
-                  href="mailto:tanner@zero2sixtymedia.com"
-                  className="btn btn-secondary"
+            <p className="mt-6 max-w-4xl text-lg leading-8 text-white/65">
+              Available for startup MVPs, SaaS products, AI-powered systems,
+              mobile apps, backend platforms, realtime systems, and scalable
+              software development projects.
+            </p>
+
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                "Flutter Development",
+                "Android Development",
+                "SaaS Platforms",
+                "AI Systems",
+                "Backend APIs",
+                "Realtime Applications",
+                "MVP Development",
+                "Startup Products",
+                "Cross-Platform Apps",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-white/75"
                 >
-                  Email links
-                </a>
-              </div>
+                  {item}
+                </div>
+              ))}
             </div>
 
-            <div className="mt-6 flex items-center gap-3 text-xs text-white/55">
-              <span className="h-2 w-2 rounded-full bg-[var(--green)] shadow-[0_0_18px_rgba(57,255,20,0.35)]" />
-              Clean delivery. Clear scope. Tight turnaround.
+            <div className="mt-12 flex flex-wrap gap-4">
+              <Link href="/start" className="btn btn-primary">
+                Start a Project
+              </Link>
+
+              <Link href="/" className="btn btn-secondary">
+                Back to Home
+              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
