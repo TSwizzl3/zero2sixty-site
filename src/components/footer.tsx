@@ -6,19 +6,19 @@ import Link from "next/link";
 const platformLinks = [
   {
     label: "PulseOS",
-    href: "/work",
+    href: "/work/pulseos",
   },
   {
     label: "DFS Edge",
-    href: "/work",
+    href: "/work/dfs-edge",
   },
   {
     label: "HypeLoop",
-    href: "/work",
+    href: "/work/hypeloop",
   },
   {
     label: "Rebound",
-    href: "/work",
+    href: "/work/rebound",
   },
 ];
 
@@ -45,6 +45,10 @@ const navigationLinks = [
   {
     label: "Portfolio",
     href: "/work",
+  },
+  {
+    label: "About",
+    href: "/about",
   },
   {
     label: "Process",
@@ -181,7 +185,7 @@ export function Footer() {
                 ))}
 
                 <a
-                  href="mailto:tanner@zero2sixtymedia.com"
+                  href="mailto:tanner@zero2sixtymediallc.com"
                   className="block text-sm text-white/65 transition hover:text-white"
                 >
                   Contact Directly
