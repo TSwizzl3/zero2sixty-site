@@ -1,56 +1,89 @@
+﻿import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Delete Your Flagged Account | Zero2Sixty Media",
+  description:
+    "Request deletion of your Flagged account and associated app data from Zero2Sixty Media LLC.",
+};
+
 export default function DeleteAccountPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       <section className="mx-auto max-w-3xl px-4 py-20">
-        <h1 className="text-4xl font-bold">Delete Your Account</h1>
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-400">
+          Flagged account deletion
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+          Delete your Flagged account and data
+        </h1>
 
-        <p className="mt-6 text-white/70">
-          If you would like to delete your account and associated data from our
-          services (including HypeLoop and Rebound), you can request deletion
-          using one of the methods below.
+        <p className="mt-6 text-lg leading-8 text-white/70">
+          You can request deletion of your Flagged account and associated app
+          data at any time. This page explains how to make the request, what
+          data is deleted, and what limited information may be retained.
         </p>
 
         <div className="mt-10 space-y-6 text-white/80">
-          <div>
-            <h2 className="text-xl font-semibold">Option 1 — In-App</h2>
-            <p className="mt-2">
-              You can delete your account directly inside the app by going to:
+          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <h2 className="text-xl font-semibold text-white">
+              How to request deletion
+            </h2>
+            <p className="mt-3 leading-7">
+              Email Zero2Sixty Media LLC from the email address connected to
+              your Flagged account. Use the subject line{" "}
+              <strong>Delete my Flagged account</strong>.
             </p>
-            <p className="mt-2 font-semibold">
-              Settings → Account → Delete Account
+            <p className="mt-3 leading-7">
+              Include your Flagged username or display name if you have one, so
+              we can confirm the correct account.
             </p>
-          </div>
+            <p className="mt-4 break-words font-semibold text-emerald-400">
+              support@zero2sixtymediallc.com
+            </p>
+          </section>
 
-          <div>
-            <h2 className="text-xl font-semibold">Option 2 — Email Request</h2>
-            <p className="mt-2">
-              Send an email request to:
+          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <h2 className="text-xl font-semibold text-white">Data deleted</h2>
+            <p className="mt-3 leading-7">
+              When your request is processed, we delete or de-identify
+              account-associated Flagged data, including:
             </p>
-            <p className="mt-2 font-semibold text-cyan-400">
-              zero2sixtygraphics@gmail.com
-            </p>
-            <p className="mt-2 text-sm text-white/60">
-              Include your account email/username so we can locate your account.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold">What Happens When You Delete</h2>
-            <ul className="mt-3 list-disc pl-6 space-y-2">
-              <li>Your account profile will be permanently removed</li>
-              <li>Your data (messages, activity, saved items) will be deleted</li>
-              <li>You will lose access to any subscriptions or features</li>
-              <li>Some data may be retained for legal, security, or fraud prevention purposes</li>
+            <ul className="mt-4 list-disc space-y-2 pl-6 leading-7">
+              <li>Your account profile and profile settings</li>
+              <li>Your posts, comments, votes, and anonymous-post usage records</li>
+              <li>Your reports, moderation records, and app activity tied to your account</li>
             </ul>
-          </div>
+          </section>
 
-          <div>
-            <h2 className="text-xl font-semibold">Processing Time</h2>
-            <p className="mt-2">
-              Account deletion requests are typically processed within 7 days.
+          <section className="rounded-2xl border border-amber-300/20 bg-amber-300/[0.06] p-6">
+            <h2 className="text-xl font-semibold text-white">
+              Data we may keep temporarily
+            </h2>
+            <p className="mt-3 leading-7">
+              We may retain limited records when required for legal, security,
+              fraud prevention, abuse prevention, dispute resolution, or policy
+              enforcement reasons.
             </p>
-          </div>
+            <p className="mt-3 leading-7">
+              Deletion requests are typically processed within 30 days after we
+              verify the request.
+            </p>
+          </section>
+
+          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+            <h2 className="text-xl font-semibold text-white">Questions</h2>
+            <p className="mt-3 leading-7">
+              For questions about account deletion, privacy, or data handling,
+              contact us at{" "}
+              <span className="break-words font-semibold text-emerald-400">
+                support@zero2sixtymediallc.com
+              </span>
+              .
+            </p>
+          </section>
         </div>
+
+        <p className="mt-10 text-sm text-white/45">Last updated: July 23, 2026</p>
       </section>
     </main>
   );
