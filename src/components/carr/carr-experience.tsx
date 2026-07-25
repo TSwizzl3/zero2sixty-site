@@ -12,6 +12,7 @@ const sections = [
   { id: "budget", label: "Budget" },
   { id: "timeline", label: "Timeline" },
   { id: "risks", label: "Due diligence" },
+  { id: "plan", label: "Action plan" },
   { id: "closing", label: "Closing" },
 ];
 
@@ -226,6 +227,23 @@ export function CarrExperience() {
               <strong>Mojave Mohican 0763C</strong>
             </div>
           </div>
+          <div className="carr-status reveal">
+            <span>Project status</span>
+            {[
+              ["Property identified", "Complete"],
+              ["Home selected", "Complete"],
+              ["Preliminary options", "Complete"],
+              ["Road + utilities", "Awaiting verification"],
+              ["Dealer quote", "Awaiting final quote"],
+              ["Contractor bids", "Not started"],
+            ].map(([label, status]) => (
+              <div key={label}>
+                <i className={status === "Complete" ? "complete" : ""} />
+                <strong>{label}</strong>
+                <small>{status}</small>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -374,6 +392,27 @@ export function CarrExperience() {
               </ul>
             </article>
           ))}
+          <div className="carr-decision-matrix reveal">
+            <div className="matrix-title">
+              <span>Decision matrix</span>
+              <strong>How the three approaches compare</strong>
+            </div>
+            <div className="matrix-row matrix-head">
+              <span>Priority</span><span>A · Attached</span><span>B · Later</span><span>C · Detached</span>
+            </div>
+            {[
+              ["Initial investment", "Highest", "Lowest", "Middle"],
+              ["Move-in speed", "4–6 mo.", "3.5–5 mo.", "4–5.5 mo."],
+              ["Finished on day one", "Yes", "No", "Yes"],
+              ["Future flexibility", "Moderate", "Highest", "High"],
+              ["Construction complexity", "Highest", "Lowest", "Moderate"],
+              ["Traditional resale appeal", "Highest", "Flexible", "Strong"],
+            ].map((row) => (
+              <div className="matrix-row" key={row[0]}>
+                {row.map((cell) => <span key={cell}>{cell}</span>)}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -411,6 +450,16 @@ export function CarrExperience() {
               <small>Includes a $15,000 planning contingency.</small>
             </div>
           </div>
+          <div className="carr-all-option-costs reveal">
+            {optionData.map((option) => (
+              <article key={option.key} className={option.featured ? "featured" : ""}>
+                <span>Option {option.key}</span>
+                <h3>{option.name}</h3>
+                <strong>{option.price}</strong>
+                <small>{option.time} target</small>
+              </article>
+            ))}
+          </div>
           <div className="carr-assumptions reveal">
             <span>Key assumptions</span>
             <p>
@@ -419,6 +468,20 @@ export function CarrExperience() {
               reachable from planned adjacent infrastructure · no extraordinary
               floodplain, retaining, soil or road costs.
             </p>
+          </div>
+          <div className="carr-budget-notes reveal">
+            <div>
+              <span>Known pricing</span>
+              <p>Land asking price: $80,000. Configured Mohican: $131,150. Prior Denver-area Cortland transport, factory and state-fee quote: $16,780.</p>
+            </div>
+            <div>
+              <span>Still allowances</span>
+              <p>Foundation, home set, grading, utility connections, permits, central air, driveway, garage, fence and contingency remain planning figures until written bids arrive.</p>
+            </div>
+            <div>
+              <span>Cash strategy</span>
+              <p>Request cash pricing and priority scheduling, but use milestone payments, inspections and lien waivers rather than paying contractors fully in advance.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -445,6 +508,23 @@ export function CarrExperience() {
             <strong>Approximately 16–20 weeks</strong>
             <p>Subject to permits, road and utility readiness, factory lead time, weather and inspections.</p>
           </div>
+          <div className="carr-option-timelines reveal">
+            <article>
+              <span>Option A</span>
+              <strong>4–6 months</strong>
+              <p>Permit the attached garage with the home and overlap its foundation, framing and electrical work with home completion.</p>
+            </article>
+            <article className="featured">
+              <span>Option B</span>
+              <strong>3.5–5 months</strong>
+              <p>Fastest occupancy. Complete only what the certificate of occupancy requires, while preserving space and utility stubs for either future garage type.</p>
+            </article>
+            <article>
+              <span>Option C</span>
+              <strong>4–5.5 months</strong>
+              <p>Build the detached garage alongside home finish work without tying its roof or structure into the residence.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -468,6 +548,92 @@ export function CarrExperience() {
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{title}</h3>
                 <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+          <div className="carr-responsibility reveal">
+            <SectionHeading
+              eyebrow="Who does what"
+              title="One coordinated scope. Clear accountability."
+            />
+            <div>
+              {[
+                ["Colorado Home Sales", "Final home configuration, factory order, transport scope, manufacturer documents and warranty handoff."],
+                ["Site / general contractor", "Permit coordination, excavation, grading, foundation, drainage, utility trenching and site sequencing."],
+                ["Set crew", "Placement, anchoring, marriage-line completion, exterior close-up and required installation certifications."],
+                ["Licensed trades", "Water, sewer, electrical service, central air or heat pump, testing and trade inspections."],
+                ["Garage + exterior team", "Garage, driveway, fence, steps, walkways and final exterior finish for Options A or C."],
+                ["Tanner & Deidre", "Selections, approvals, budget tracking, milestone payments, documentation and communication with Tom."],
+              ].map(([title, copy]) => (
+                <article key={title}>
+                  <strong>{title}</strong>
+                  <p>{copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="plan" className="carr-section carr-plan">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="07 / Complete action plan"
+            title="Include the hard-to-retrofit upgrades. Verify everything else."
+            copy="The initial build should cover comfort, infrastructure and future readiness. Cosmetic additions can wait."
+          />
+          <div className="carr-upgrades reveal">
+            <div>
+              <span>Include now</span>
+              <ul>
+                <li>High-efficiency central air or heat pump</li>
+                <li>Smart thermostat and complete commissioning</li>
+                <li>200-amp service confirmation</li>
+                <li>Whole-home surge protection</li>
+                <li>CAT6 wiring to key rooms</li>
+                <li>Exterior outlets and hose bibs</li>
+                <li>Garage or future-garage EV circuit</li>
+                <li>Garage-ready drainage and site placement</li>
+              </ul>
+            </div>
+            <div>
+              <span>Selected home finishes</span>
+              <ul>
+                <li>Upgraded spruce-green vinyl siding</li>
+                <li>Black architectural shingles</li>
+                <li>White trim and black shutters</li>
+                <li>Hardwood cabinetry</li>
+                <li>Glass tile backsplash</li>
+                <li>Stainless appliance package</li>
+                <li>Fiberglass tub with upgraded tile walls</li>
+                <li>Wild Dove flooring and Camelback carpet</li>
+              </ul>
+            </div>
+          </div>
+          <div className="carr-investment reveal">
+            <div>
+              <span>Why it is worth considering</span>
+              <h3>New construction at a planning cost below the listing’s stated $600k–$700k neighborhood range.</h3>
+            </div>
+            <div>
+              <p>Modern systems and manufacturer warranties</p>
+              <p>No HOA and flexible future improvements</p>
+              <p>Lower expected maintenance than many older homes</p>
+              <p>Potential equity—but no guaranteed completed value</p>
+            </div>
+          </div>
+          <div className="carr-next-steps reveal">
+            <span>Next steps before any commitment</span>
+            {[
+              ["01", "Collect the seller package", "Road plan, shared-infrastructure budget, surveys, drainage work, permits and floodplain documents."],
+              ["02", "Confirm county feasibility", "Manufactured or modular eligibility, setbacks, garage attachment, buildable envelope and certificate-of-occupancy requirements."],
+              ["03", "Obtain the dealer quote", "Exact Mohican selections, delivery, state and factory fees, set scope, central-air options and warranties."],
+              ["04", "Bid the complete site scope", "Foundation, grading, utilities, driveway, steps, garage and fence—with exclusions clearly stated."],
+              ["05", "Replace every allowance", "Build the final cash budget, contingency and milestone-payment schedule before buying land or ordering the home."],
+            ].map(([number, title, copy]) => (
+              <article key={number}>
+                <span>{number}</span>
+                <div><strong>{title}</strong><p>{copy}</p></div>
               </article>
             ))}
           </div>
