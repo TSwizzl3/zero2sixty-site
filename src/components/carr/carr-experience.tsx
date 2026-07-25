@@ -412,6 +412,11 @@ export function CarrExperience() {
             title="Choose the right balance of speed, completeness and cost."
             copy="All three options include the land, configured home, permanent foundation, essential site work and central air."
           />
+          <div className="carr-interaction-hint reveal">
+            <span>Interactive comparison</span>
+            <strong>Select each option to view its complete scope, price and timeline.</strong>
+            <i>↓</i>
+          </div>
           <div className="carr-option-tabs reveal" role="tablist">
             {optionData.map((option) => (
               <button
@@ -421,8 +426,9 @@ export function CarrExperience() {
                 onClick={() => setSelectedOption(option.key)}
                 className={selectedOption === option.key ? "active" : ""}
               >
-                <span>Option {option.key}</span>
+                <span>Option {option.key} · Click to explore</span>
                 <strong>{option.name}</strong>
+                <i aria-hidden="true">→</i>
               </button>
             ))}
           </div>
