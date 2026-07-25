@@ -20,7 +20,7 @@ const optionData = [
   {
     key: "A",
     name: "Complete Forever Home",
-    price: "$425k–$440k",
+    price: "$368k–$429k",
     time: "4–6 months",
     note: "Best finished result",
     description:
@@ -30,7 +30,7 @@ const optionData = [
   {
     key: "B",
     name: "Fastest Move-In",
-    price: "$340k–$350k",
+    price: "$298k–$331k",
     time: "3.5–5 months",
     note: "Recommended starting point",
     description:
@@ -41,7 +41,7 @@ const optionData = [
   {
     key: "C",
     name: "Detached Garage Package",
-    price: "$405k–$420k",
+    price: "$358k–$419k",
     time: "4–5.5 months",
     note: "Balanced one-phase build",
     description:
@@ -428,10 +428,14 @@ export function CarrExperience() {
               {[
                 ["Land", "$80,000", 24],
                 ["Configured home", "$131,150", 39],
-                ["Delivery allowance", "$16,800", 5],
-                ["Site + foundation", "$85,000", 25],
-                ["Central air", "$6,500", 2],
-                ["Driveway + contingency", "$25,000", 7],
+                ["Delivery + fees", "$16,780", 5],
+                ["Foundation + set", "$28k–$37k", 10],
+                ["Site + grading", "$8k–$12k", 4],
+                ["Utility connections", "$10k–$18k", 5],
+                ["Permits + engineering", "$5k–$8k", 2],
+                ["Central air", "$5.9k–$8k", 2],
+                ["Basic entry + drive", "$5k–$8k", 2],
+                ["Contingency", "$8k–$12k", 3],
               ].map(([label, value, width]) => (
                 <div key={label as string}>
                   <span>{label}</span>
@@ -441,13 +445,13 @@ export function CarrExperience() {
               ))}
             </div>
             <div className="carr-budget-total">
-              <span>Option B planning target</span>
-              <strong>$340k–$350k</strong>
+              <span>Option B working target</span>
+              <strong>≈ $318,000</strong>
               <p>
                 Fastest move-in with an attached or detached garage and fence
                 planned for a later phase.
               </p>
-              <small>Includes a $15,000 planning contingency.</small>
+              <small>Feasibility range: approximately $298,000–$331,000.</small>
             </div>
           </div>
           <div className="carr-all-option-costs reveal">
@@ -465,9 +469,27 @@ export function CarrExperience() {
             <p>
               $80,000 land price · $131,150 configured home · Denver-area
               delivery based on the prior $16,780 Cortland quote · utilities
-              reachable from planned adjacent infrastructure · no extraordinary
-              floodplain, retaining, soil or road costs.
+              reachable from planned adjacent infrastructure · simple permanent
+              foundation and set · no extraordinary floodplain, retaining, soil
+              or road costs.
             </p>
+          </div>
+          <div className="carr-range-explainer reveal">
+            <article>
+              <span>Lean feasible case</span>
+              <strong>≈ $298,000</strong>
+              <p>Competitive bids, simple site work, low utility share and an $8,000 contingency. This is where the earlier $296,000 example was aiming, but it leaves little room for surprises.</p>
+            </article>
+            <article className="featured">
+              <span>Working target</span>
+              <strong>≈ $318,000</strong>
+              <p>The original proposal target remains credible if the shared infrastructure keeps utility costs controlled and the foundation/site package bids well.</p>
+            </article>
+            <article>
+              <span>Protected case</span>
+              <strong>≈ $331,000</strong>
+              <p>Higher ends of the current allowances with a $12,000 contingency, while still excluding a garage, fence and full landscaping.</p>
+            </article>
           </div>
           <div className="carr-budget-notes reveal">
             <div>
@@ -476,7 +498,7 @@ export function CarrExperience() {
             </div>
             <div>
               <span>Still allowances</span>
-              <p>Foundation, home set, grading, utility connections, permits, central air, driveway, garage, fence and contingency remain planning figures until written bids arrive.</p>
+              <p>Foundation, home set, grading, utility connections, permits, central air, basic driveway and contingency remain planning figures until written bids arrive. Jefferson County states that unincorporated Jeffco does not charge use tax.</p>
             </div>
             <div>
               <span>Cash strategy</span>
