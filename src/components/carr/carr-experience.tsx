@@ -206,7 +206,7 @@ export function CarrExperience() {
             {[
               ["$80,000", "Land asking price"],
               ["2,280", "Square feet"],
-              ["3 + 2*", "Bedrooms + bathrooms"],
+              ["3 + 3", "Bedrooms + full bathrooms"],
               ["100%", "Cash funded"],
             ].map(([value, label]) => (
               <div key={label}>
@@ -315,7 +315,7 @@ export function CarrExperience() {
           <SectionHeading
             eyebrow="02 / The home"
             title="Space that lives like a traditional ranch."
-            copy="The Mohican combines generous common areas and three bedrooms in a 2,280-square-foot sectional home. The uploaded floor plan shows two bathrooms; final configuration is pending dealer confirmation."
+            copy="The Mohican combines generous common areas, three bedrooms and three full bathrooms in a 2,280-square-foot sectional home."
           />
           <div className="carr-home-showcase reveal">
             <div className="carr-home-visual">
@@ -333,7 +333,7 @@ export function CarrExperience() {
               <ul>
                 <li><span>Living area</span><strong>2,280 sq. ft.</strong></li>
                 <li><span>Bedrooms</span><strong>3</strong></li>
-                <li><span>Bathrooms</span><strong>2 shown*</strong></li>
+                <li><span>Full bathrooms</span><strong>3</strong></li>
                 <li><span>Foundation</span><strong>Permanent</strong></li>
                 <li><span>Base + selections</span><strong>$131,150</strong></li>
               </ul>
@@ -351,9 +351,9 @@ export function CarrExperience() {
               <span>Actual model floor plan</span>
               <h3>Open living at the center. Private bedrooms at each side.</h3>
               <p>
-                The uploaded 0763C plan shows two full bathrooms. The proposal
-                will retain that count until the dealer confirms whether the
-                configured BuildTrove version adds a third bathroom.
+                The configured Mohican provides three bedrooms and three full
+                bathrooms, with generous common areas and separation between
+                the primary suite and secondary bedrooms.
               </p>
             </div>
             <figure>
