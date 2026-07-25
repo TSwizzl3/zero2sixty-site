@@ -42,6 +42,14 @@ body:has(.carr-page) {
   color: white;
   background: linear-gradient(180deg, rgba(13, 20, 17, 0.72), transparent);
   backdrop-filter: blur(2px);
+  transition: color .35s, background .35s, border-color .35s;
+}
+
+.carr-nav.on-light {
+  color: var(--ink);
+  border-bottom: 1px solid rgba(23,33,28,.08);
+  background: rgba(242,240,233,.88);
+  backdrop-filter: blur(14px);
 }
 
 .carr-wordmark,
@@ -80,6 +88,10 @@ body:has(.carr-page) {
 }
 
 .carr-nav-links button:hover { color: #fff; }
+.carr-nav.on-light .carr-nav-links button { color: rgba(23,33,28,.62); }
+.carr-nav.on-light .carr-nav-links button:hover { color: var(--ink); }
+.carr-nav.on-light .carr-wordmark span { color: rgba(23,33,28,.4); }
+.carr-nav.on-light .carr-menu i { background: var(--ink); }
 .carr-menu { display: none; }
 
 .carr-progress {

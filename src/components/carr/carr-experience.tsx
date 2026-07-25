@@ -114,9 +114,14 @@ export function CarrExperience() {
     setMenuOpen(false);
   };
 
+  const lightSection = ["opportunity", "home", "options", "timeline", "risks"].includes(active);
+
   return (
     <main className="carr-page">
-      <nav className="carr-nav" aria-label="Project Carr Court">
+      <nav
+        className={`carr-nav ${lightSection ? "on-light" : ""}`}
+        aria-label="Project Carr Court"
+      >
         <button className="carr-wordmark" onClick={() => goTo("overview")}>
           CARR <span>/ 01</span>
         </button>
