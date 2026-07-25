@@ -159,7 +159,7 @@ export function CarrExperience() {
 
       <section id="overview" className="carr-hero">
         <Image
-          src="/project-carr/carr-court-hero.png"
+          src="/project-carr/carr-court-hero-v2.png"
           alt="Concept rendering of the proposed Carr Court residence"
           fill
           priority
@@ -320,7 +320,7 @@ export function CarrExperience() {
           <div className="carr-home-showcase reveal">
             <div className="carr-home-visual">
               <Image
-                src="/project-carr/real/mohican-exterior.webp"
+                src="/project-carr/real/mohican-exterior-v2.png"
                 alt="Adventure Homes Mohican 0763C display exterior"
                 fill
                 sizes="(max-width: 900px) 100vw, 65vw"
@@ -718,7 +718,7 @@ export function CarrExperience() {
 
       <section id="closing" className="carr-closing">
         <Image
-          src="/project-carr/carr-court-hero.png"
+          src="/project-carr/carr-court-hero-v2.png"
           alt=""
           fill
           sizes="100vw"
