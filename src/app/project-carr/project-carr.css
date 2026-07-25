@@ -274,6 +274,12 @@ body:has(.carr-page) {
 .carr-property-facts strong, .carr-property-facts span { display: block; }
 .carr-property-facts strong { font-family: "Manrope"; font-size: 1.25rem; font-weight: 400; }
 .carr-property-facts span { margin-top: .3rem; color: rgba(255,255,255,.42); font-size: .62rem; text-transform: uppercase; letter-spacing: .09em; }
+.carr-lot-gallery { display: grid; grid-template-columns: 1.35fr .65fr; grid-template-rows: repeat(2, 240px); gap: 12px; margin-top: 5rem; }
+.carr-lot-gallery figure { position: relative; margin: 0; overflow: hidden; background: #17271f; }
+.carr-lot-gallery figure.primary { grid-row: 1/3; }
+.carr-lot-gallery img { object-fit: cover; transition: transform .8s ease; }
+.carr-lot-gallery figure:hover img { transform: scale(1.025); }
+.carr-lot-gallery figcaption { position: absolute; left: 1rem; bottom: 1rem; padding: .5rem .7rem; color: rgba(255,255,255,.8); background: rgba(14,24,19,.78); font-size: .6rem; letter-spacing: .09em; text-transform: uppercase; backdrop-filter: blur(8px); }
 
 .carr-home { background: #e7e1d6; }
 .carr-home-showcase { display: grid; grid-template-columns: 1.45fr .55fr; margin-top: 5rem; box-shadow: 0 25px 80px rgba(31,42,35,.12); }
@@ -288,6 +294,20 @@ body:has(.carr-page) {
 .carr-home-specs li span { color: rgba(255,255,255,.48); }
 .carr-home-specs li strong { font-weight: 500; }
 .carr-home-specs > a { display: inline-block; margin-top: 2rem; padding-bottom: .3rem; border-bottom: 1px solid var(--brass); color: #d9c5a6; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+.carr-floorplan { display: grid; grid-template-columns: .33fr .67fr; gap: 4rem; align-items: center; margin-top: 5rem; padding: clamp(2rem,4vw,4rem); background: #f2eee5; }
+.carr-floorplan > div > span { color: var(--brass); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }
+.carr-floorplan h3 { margin: 1rem 0; font-family: "Playfair Display"; font-size: 2rem; font-weight: 500; line-height: 1.25; }
+.carr-floorplan p { color: #6a726c; font-size: .75rem; line-height: 1.7; }
+.carr-floorplan figure { margin: 0; padding: 1rem; background: white; }
+.carr-floorplan img { display: block; width: 100%; height: auto; }
+.carr-room-gallery { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 12px; }
+.carr-room-gallery figure { position: relative; min-height: 300px; margin: 0; overflow: hidden; background: #d5cfc3; }
+.carr-room-gallery img { object-fit: cover; transition: transform .8s ease; }
+.carr-room-gallery figure:hover img { transform: scale(1.025); }
+.carr-room-gallery figcaption { position: absolute; inset: auto 0 0; display: grid; gap: .2rem; padding: 1.6rem 1.2rem 1rem; color: white; background: linear-gradient(transparent,rgba(12,18,15,.78)); }
+.carr-room-gallery figcaption strong { font-family: "Manrope"; font-size: .9rem; font-weight: 500; }
+.carr-room-gallery figcaption span { color: rgba(255,255,255,.62); font-size: .62rem; }
+.carr-photo-note { max-width: 700px; margin: 1.2rem 0 0 auto; color: #777d76; font-size: .65rem; line-height: 1.6; text-align: right; }
 .carr-finish-grid { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 1.5rem; }
 .carr-finish-grid div { padding: 1.3rem; border-right: 1px solid #cac3b5; }
 .carr-finish-grid div:last-child { border-right: 0; }
@@ -432,12 +452,13 @@ body:has(.carr-page) {
   .carr-menu { display: grid; gap: 6px; }
   .carr-menu i { display: block; width: 24px; height: 1px; background: white; }
   .carr-progress { display: none; }
-  .carr-property-grid, .carr-home-showcase, .carr-budget-grid { grid-template-columns: 1fr; }
+  .carr-property-grid, .carr-home-showcase, .carr-budget-grid, .carr-floorplan { grid-template-columns: 1fr; }
   .carr-stats { grid-template-columns: repeat(2,1fr); }
   .carr-stats div:nth-child(2) { border-right: 0; }
   .carr-stats div:nth-child(-n+2) { border-bottom: 1px solid #cfc9bb; }
   .carr-manifesto { grid-template-columns: 1fr; gap: 2rem; }
   .carr-home-visual { min-height: 420px; }
+  .carr-room-gallery { grid-template-columns: repeat(2,1fr); }
   .carr-finish-grid { grid-template-columns: repeat(3,1fr); }
   .carr-finish-grid div:nth-child(3) { border-right: 0; }
   .carr-option-detail { grid-template-columns: 1fr; gap: 2rem; }
@@ -458,6 +479,9 @@ body:has(.carr-page) {
   .carr-concept-label { display: none; }
   .carr-stats div { padding: 1.4rem .6rem; }
   .carr-property-facts, .carr-finish-grid { grid-template-columns: repeat(2,1fr); }
+  .carr-lot-gallery { grid-template-columns: 1fr; grid-template-rows: repeat(3,260px); }
+  .carr-lot-gallery figure.primary { grid-row: auto; }
+  .carr-room-gallery { grid-template-columns: 1fr; }
   .carr-finish-grid div:nth-child(3) { border-right: 1px solid #cac3b5; }
   .carr-finish-grid div:nth-child(even) { border-right: 0; }
   .carr-option-tabs { grid-template-columns: 1fr; }

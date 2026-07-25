@@ -206,7 +206,7 @@ export function CarrExperience() {
             {[
               ["$80,000", "Land asking price"],
               ["2,280", "Square feet"],
-              ["3 + 3", "Bedrooms + bathrooms"],
+              ["3 + 2*", "Bedrooms + bathrooms"],
               ["100%", "Cash funded"],
             ].map(([value, label]) => (
               <div key={label}>
@@ -294,6 +294,20 @@ export function CarrExperience() {
             </div>
           </div>
         </div>
+        <div className="carr-wrap carr-lot-gallery reveal">
+          <figure className="primary">
+            <Image src="/project-carr/real/lot-boundary.webp" alt="Aerial property boundary showing the approximate 106 by 117 foot Carr Court lot" fill sizes="(max-width: 900px) 100vw, 60vw" />
+            <figcaption>Approximate lot boundary · listing image</figcaption>
+          </figure>
+          <figure>
+            <Image src="/project-carr/real/lot-aerial.webp" alt="Aerial view of the Carr Court lot and neighboring homes" fill sizes="(max-width: 900px) 100vw, 40vw" />
+            <figcaption>Neighborhood context · listing image</figcaption>
+          </figure>
+          <figure>
+            <Image src="/project-carr/real/lot-context.webp" alt="Aerial view showing Carr Court access to Wadsworth Boulevard, C-470 and Santa Fe Drive" fill sizes="(max-width: 900px) 100vw, 40vw" />
+            <figcaption>Regional access · listing image</figcaption>
+          </figure>
+        </div>
       </section>
 
       <section id="home" className="carr-section carr-home">
@@ -301,17 +315,17 @@ export function CarrExperience() {
           <SectionHeading
             eyebrow="02 / The home"
             title="Space that lives like a traditional ranch."
-            copy="The Mohican combines generous common areas, three bedrooms and three bathrooms in a 2,280-square-foot sectional home."
+            copy="The Mohican combines generous common areas and three bedrooms in a 2,280-square-foot sectional home. The uploaded floor plan shows two bathrooms; final configuration is pending dealer confirmation."
           />
           <div className="carr-home-showcase reveal">
             <div className="carr-home-visual">
               <Image
-                src="/project-carr/carr-court-hero.png"
-                alt="Concept rendering of spruce green home exterior"
+                src="/project-carr/real/mohican-exterior.webp"
+                alt="Adventure Homes Mohican 0763C display exterior"
                 fill
                 sizes="(max-width: 900px) 100vw, 65vw"
               />
-              <span>Exterior vision · conceptual</span>
+              <span>Actual Mohican display home · Adventure Homes</span>
             </div>
             <div className="carr-home-specs">
               <p>Mohican 0763C</p>
@@ -319,12 +333,12 @@ export function CarrExperience() {
               <ul>
                 <li><span>Living area</span><strong>2,280 sq. ft.</strong></li>
                 <li><span>Bedrooms</span><strong>3</strong></li>
-                <li><span>Bathrooms</span><strong>3</strong></li>
+                <li><span>Bathrooms</span><strong>2 shown*</strong></li>
                 <li><span>Foundation</span><strong>Permanent</strong></li>
                 <li><span>Base + selections</span><strong>$131,150</strong></li>
               </ul>
               <a
-                href="https://colorado-home-sales.buildtrove.com/homes/adventure-homes-mojave-sectional-mohican-0763c"
+                href="https://colorado-home-sales.buildtrove.com/deal"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -332,6 +346,46 @@ export function CarrExperience() {
               </a>
             </div>
           </div>
+          <div className="carr-floorplan reveal">
+            <div>
+              <span>Actual model floor plan</span>
+              <h3>Open living at the center. Private bedrooms at each side.</h3>
+              <p>
+                The uploaded 0763C plan shows two full bathrooms. The proposal
+                will retain that count until the dealer confirms whether the
+                configured BuildTrove version adds a third bathroom.
+              </p>
+            </div>
+            <figure>
+              <Image
+                src="/project-carr/real/mohican-floorplan.webp"
+                alt="Adventure Homes Mohican 0763C floor plan"
+                width={1956}
+                height={777}
+                sizes="(max-width: 900px) 100vw, 72vw"
+              />
+            </figure>
+          </div>
+          <div className="carr-room-gallery reveal">
+            {[
+              ["/project-carr/real/kitchen-wide.webp", "Kitchen", "Hardwood cabinetry · stainless appliances"],
+              ["/project-carr/real/kitchen-island.webp", "Island", "Large gathering and preparation space"],
+              ["/project-carr/real/living-room.webp", "Living room", "Bright, open everyday living"],
+              ["/project-carr/real/primary-bedroom.webp", "Primary suite", "Tray ceiling and bathroom access"],
+              ["/project-carr/real/bathroom.webp", "Primary bathroom", "Double vanity and tiled shower"],
+              ["/project-carr/real/dining.webp", "Dining room", "Dedicated dining with natural light"],
+            ].map(([src, title, detail]) => (
+              <figure key={src}>
+                <Image src={src} alt={`${title} in the Adventure Homes Mohican display model`} fill sizes="(max-width: 700px) 100vw, 33vw" />
+                <figcaption><strong>{title}</strong><span>{detail}</span></figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className="carr-photo-note reveal">
+            Manufacturer display photography illustrates the Mohican layout and
+            available finishes. Final selections and included features remain
+            subject to the written dealer order.
+          </p>
           <div className="carr-finish-grid reveal">
             {[
               ["Spruce", "Upgraded siding", "#243a32"],
