@@ -1,0 +1,497 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const sections = [
+  { id: "overview", label: "Overview" },
+  { id: "opportunity", label: "Opportunity" },
+  { id: "property", label: "Property" },
+  { id: "home", label: "The home" },
+  { id: "options", label: "Build options" },
+  { id: "budget", label: "Budget" },
+  { id: "timeline", label: "Timeline" },
+  { id: "risks", label: "Due diligence" },
+  { id: "closing", label: "Closing" },
+];
+
+const optionData = [
+  {
+    key: "A",
+    name: "Complete Forever Home",
+    price: "$425k–$440k",
+    time: "4–6 months",
+    note: "Best finished result",
+    description:
+      "Complete the home, attached garage, fence, full driveway and exterior work as one coordinated project.",
+    includes: ["Attached garage", "Privacy fence", "Full driveway", "Central air"],
+  },
+  {
+    key: "B",
+    name: "Fastest Move-In",
+    price: "$340k–$350k",
+    time: "3.5–5 months",
+    note: "Recommended starting point",
+    description:
+      "Prioritize occupancy. Preserve the site plan for a future attached or detached garage and add the fence later.",
+    includes: ["Move-in ready home", "Basic driveway", "Central air", "Future garage plan"],
+    featured: true,
+  },
+  {
+    key: "C",
+    name: "Detached Garage Package",
+    price: "$405k–$420k",
+    time: "4–5.5 months",
+    note: "Balanced one-phase build",
+    description:
+      "Finish the property in one phase with a detached garage that reduces structural coordination and cost.",
+    includes: ["Detached garage", "Privacy fence", "Full driveway", "Central air"],
+  },
+];
+
+const timeline = [
+  ["01", "Due diligence", "Weeks 1–3", "Road, utilities, zoning, survey and site feasibility"],
+  ["02", "Close & order", "Weeks 3–4", "Cash closing, factory order and contractor scheduling"],
+  ["03", "Parallel build", "Weeks 4–12", "Factory production while permits and site work advance"],
+  ["04", "Set the home", "Weeks 11–13", "Delivery, permanent foundation and marriage-line work"],
+  ["05", "Connect & finish", "Weeks 12–17", "Utilities, HVAC, driveway, inspections and punch list"],
+  ["06", "Move in", "Weeks 16–20", "Certificate of occupancy and family move-in"],
+];
+
+function SectionHeading({
+  eyebrow,
+  title,
+  copy,
+}: {
+  eyebrow: string;
+  title: string;
+  copy?: string;
+}) {
+  return (
+    <div className="carr-heading reveal">
+      <span>{eyebrow}</span>
+      <h2>{title}</h2>
+      {copy ? <p>{copy}</p> : null}
+    </div>
+  );
+}
+
+export function CarrExperience() {
+  const [active, setActive] = useState("overview");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("B");
+
+  useEffect(() => {
+    const revealObserver = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        }),
+      { threshold: 0.14 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }),
+      { rootMargin: "-42% 0px -48% 0px" }
+    );
+    sections.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) sectionObserver.observe(element);
+    });
+
+    return () => {
+      revealObserver.disconnect();
+      sectionObserver.disconnect();
+    };
+  }, []);
+
+  const goTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
+  };
+
+  return (
+    <main className="carr-page">
+      <nav className="carr-nav" aria-label="Project Carr Court">
+        <button className="carr-wordmark" onClick={() => goTo("overview")}>
+          CARR <span>/ 01</span>
+        </button>
+        <div className={`carr-nav-links ${menuOpen ? "open" : ""}`}>
+          {sections.slice(1, 7).map((item) => (
+            <button key={item.id} onClick={() => goTo(item.id)}>
+              {item.label}
+            </button>
+          ))}
+        </div>
+        <button
+          className="carr-menu"
+          onClick={() => setMenuOpen((value) => !value)}
+          aria-expanded={menuOpen}
+          aria-label="Toggle section menu"
+        >
+          <i />
+          <i />
+        </button>
+      </nav>
+
+      <aside className="carr-progress" aria-label="Page progress">
+        {sections.map((item, index) => (
+          <button
+            key={item.id}
+            className={active === item.id ? "active" : ""}
+            onClick={() => goTo(item.id)}
+            aria-label={`Go to ${item.label}`}
+          >
+            <span>{String(index + 1).padStart(2, "0")}</span>
+          </button>
+        ))}
+      </aside>
+
+      <section id="overview" className="carr-hero">
+        <Image
+          src="/project-carr/carr-court-hero.png"
+          alt="Concept rendering of the proposed Carr Court residence"
+          fill
+          priority
+          sizes="100vw"
+          className="carr-hero-image"
+        />
+        <div className="carr-hero-shade" />
+        <div className="carr-hero-content">
+          <p className="carr-kicker">Residential Development Proposal</p>
+          <h1>
+            Project
+            <br />
+            <em>Carr Court</em>
+          </h1>
+          <p className="carr-intro">
+            A thoughtful plan to create a permanent family home in Littleton,
+            Colorado.
+          </p>
+          <div className="carr-prepared">
+            <div>
+              <span>Prepared for</span>
+              <strong>Tom Marsh</strong>
+            </div>
+            <div>
+              <span>Prepared by</span>
+              <strong>Tanner &amp; Deidre</strong>
+            </div>
+          </div>
+        </div>
+        <button className="carr-scroll" onClick={() => goTo("opportunity")}>
+          Explore the proposal <span>↓</span>
+        </button>
+        <span className="carr-concept-label">Conceptual rendering</span>
+      </section>
+
+      <section id="opportunity" className="carr-section carr-overview">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="The opportunity"
+            title="A new home. A clear plan. A lasting investment."
+            copy="Project Carr Court brings the land, home, essential site work and three build strategies into one understandable decision."
+          />
+          <div className="carr-stats reveal">
+            {[
+              ["$80,000", "Land asking price"],
+              ["2,280", "Square feet"],
+              ["3 + 3", "Bedrooms + bathrooms"],
+              ["100%", "Cash funded"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="carr-manifesto reveal">
+            <p>
+              The goal is not simply to buy another house. It is to create a
+              modern, energy-efficient home designed around our family while
+              making each construction decision carefully and transparently.
+            </p>
+            <div>
+              <span>Selected home</span>
+              <strong>Adventure Homes</strong>
+              <strong>Mojave Mohican 0763C</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="property" className="carr-section carr-property">
+        <div className="carr-wrap carr-property-grid">
+          <div>
+            <SectionHeading
+              eyebrow="01 / The property"
+              title="A rare foothold in an established Littleton neighborhood."
+              copy="A 0.29-acre cul-de-sac lot with no HOA, R-1 zoning and reported pre-development work already underway."
+            />
+            <a
+              className="carr-text-link reveal"
+              href="https://www.zillow.com/homedetails/7873-S-Carr-Ct-Littleton-CO-80128/108379940_zpid/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View current listing ↗
+            </a>
+          </div>
+          <div className="carr-site-card reveal">
+            <div className="carr-site-address">
+              <span>Proposed site</span>
+              <strong>7873 S. Carr Court</strong>
+              <small>Littleton, Colorado 80128</small>
+            </div>
+            <div className="carr-lot-diagram" aria-label="Conceptual lot diagram">
+              <span className="road">Carr Court</span>
+              <div className="lot">
+                <div className="home-footprint">Residence</div>
+                <div className="garage-footprint">Garage</div>
+                <div className="yard-footprint">Private yard</div>
+              </div>
+              <small>Concept only · final placement subject to engineering</small>
+            </div>
+            <div className="carr-property-facts">
+              {[
+                ["0.29 ac", "Lot size"],
+                ["R-1", "Zoning"],
+                ["None", "HOA"],
+                ["Public", "Water listed"],
+              ].map(([value, label]) => (
+                <div key={label}>
+                  <strong>{value}</strong>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="home" className="carr-section carr-home">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="02 / The home"
+            title="Space that lives like a traditional ranch."
+            copy="The Mohican combines generous common areas, three bedrooms and three bathrooms in a 2,280-square-foot sectional home."
+          />
+          <div className="carr-home-showcase reveal">
+            <div className="carr-home-visual">
+              <Image
+                src="/project-carr/carr-court-hero.png"
+                alt="Concept rendering of spruce green home exterior"
+                fill
+                sizes="(max-width: 900px) 100vw, 65vw"
+              />
+              <span>Exterior vision · conceptual</span>
+            </div>
+            <div className="carr-home-specs">
+              <p>Mohican 0763C</p>
+              <h3>Designed for everyday life—and the years ahead.</h3>
+              <ul>
+                <li><span>Living area</span><strong>2,280 sq. ft.</strong></li>
+                <li><span>Bedrooms</span><strong>3</strong></li>
+                <li><span>Bathrooms</span><strong>3</strong></li>
+                <li><span>Foundation</span><strong>Permanent</strong></li>
+                <li><span>Base + selections</span><strong>$131,150</strong></li>
+              </ul>
+              <a
+                href="https://colorado-home-sales.buildtrove.com/homes/adventure-homes-mojave-sectional-mohican-0763c"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Explore the model ↗
+              </a>
+            </div>
+          </div>
+          <div className="carr-finish-grid reveal">
+            {[
+              ["Spruce", "Upgraded siding", "#243a32"],
+              ["Architectural", "Black shingles", "#202326"],
+              ["Hardwood", "Cabinetry", "#856f52"],
+              ["Stainless", "Appliances", "#b7b9b6"],
+              ["Glass tile", "Backsplash", "#d8d4c8"],
+              ["Central air", "Initial-build priority", "#6b8790"],
+            ].map(([title, label, color]) => (
+              <div key={title}>
+                <i style={{ background: color }} />
+                <strong>{title}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="options" className="carr-section carr-options">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="03 / Three paths"
+            title="Choose the right balance of speed, completeness and cost."
+            copy="All three options include the land, configured home, permanent foundation, essential site work and central air."
+          />
+          <div className="carr-option-tabs reveal" role="tablist">
+            {optionData.map((option) => (
+              <button
+                key={option.key}
+                role="tab"
+                aria-selected={selectedOption === option.key}
+                onClick={() => setSelectedOption(option.key)}
+                className={selectedOption === option.key ? "active" : ""}
+              >
+                <span>Option {option.key}</span>
+                <strong>{option.name}</strong>
+              </button>
+            ))}
+          </div>
+          {optionData.map((option) => (
+            <article
+              key={option.key}
+              className={`carr-option-detail ${selectedOption === option.key ? "active" : ""}`}
+              role="tabpanel"
+            >
+              <div>
+                <span>{option.note}</span>
+                <h3>{option.name}</h3>
+                <p>{option.description}</p>
+              </div>
+              <div className="carr-option-numbers">
+                <div><span>Planning range</span><strong>{option.price}</strong></div>
+                <div><span>Target move-in</span><strong>{option.time}</strong></div>
+              </div>
+              <ul>
+                {option.includes.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="budget" className="carr-section carr-budget">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="04 / Financial overview"
+            title="A planning guide—not a promise."
+            copy="The figures below organize the known pricing and current allowances. Contractor bids, utility costs and engineering will replace allowances before a final commitment."
+          />
+          <div className="carr-budget-grid reveal">
+            <div className="carr-budget-bars">
+              {[
+                ["Land", "$80,000", 24],
+                ["Configured home", "$131,150", 39],
+                ["Delivery allowance", "$16,800", 5],
+                ["Site + foundation", "$85,000", 25],
+                ["Central air", "$6,500", 2],
+                ["Driveway + contingency", "$25,000", 7],
+              ].map(([label, value, width]) => (
+                <div key={label as string}>
+                  <span>{label}</span>
+                  <i><b style={{ width: `${width}%` }} /></i>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="carr-budget-total">
+              <span>Option B planning target</span>
+              <strong>$340k–$350k</strong>
+              <p>
+                Fastest move-in with an attached or detached garage and fence
+                planned for a later phase.
+              </p>
+              <small>Includes a $15,000 planning contingency.</small>
+            </div>
+          </div>
+          <div className="carr-assumptions reveal">
+            <span>Key assumptions</span>
+            <p>
+              $80,000 land price · $131,150 configured home · Denver-area
+              delivery based on the prior $16,780 Cortland quote · utilities
+              reachable from planned adjacent infrastructure · no extraordinary
+              floodplain, retaining, soil or road costs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="timeline" className="carr-section carr-timeline">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="05 / Fast-track schedule"
+            title="Work in parallel. Move in sooner."
+            copy="Cash funding removes lender underwriting and draw schedules. The greatest time savings comes from advancing site work while the home is being built."
+          />
+          <div className="carr-timeline-list">
+            {timeline.map(([number, title, timing, detail]) => (
+              <div className="reveal" key={number}>
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <strong>{timing}</strong>
+                <p>{detail}</p>
+              </div>
+            ))}
+          </div>
+          <div className="carr-timeline-callout reveal">
+            <span>Fastest realistic occupancy</span>
+            <strong>Approximately 16–20 weeks</strong>
+            <p>Subject to permits, road and utility readiness, factory lead time, weather and inspections.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="risks" className="carr-section carr-risks">
+        <div className="carr-wrap">
+          <SectionHeading
+            eyebrow="06 / Due diligence"
+            title="Resolve the expensive unknowns before committing."
+            copy="The opportunity is compelling because the price is low. That makes verification—not optimism—the right next move."
+          />
+          <div className="carr-risk-grid reveal">
+            {[
+              ["Road & access", "Confirm the final approach, easements, schedule and each owner's remaining share."],
+              ["Utilities", "Obtain written tap, extension and connection costs for water, sewer, electric and gas."],
+              ["Floodplain", "Review the current map, permit and buildable-envelope documentation—not verbal confirmation alone."],
+              ["Home eligibility", "Confirm HUD or modular acceptance, design standards, setbacks and garage attachment rules."],
+              ["Site engineering", "Review survey, drainage, soils and foundation requirements before ordering the home."],
+              ["Contract scope", "Define who owns delivery, set, marriage-line finish, HVAC, inspections and warranty handoff."],
+            ].map(([title, copy], index) => (
+              <article key={title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="closing" className="carr-closing">
+        <Image
+          src="/project-carr/carr-court-hero.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="carr-closing-image"
+        />
+        <div className="carr-closing-shade" />
+        <div className="carr-closing-content reveal">
+          <span>Our commitment</span>
+          <h2>A home built with care. An investment handled with respect.</h2>
+          <p>
+            If given the opportunity to move forward, we are committed to
+            treating every dollar thoughtfully, communicating openly and
+            validating the important details before decisions are made.
+          </p>
+          <div>
+            <strong>Thank you for considering Project Carr Court.</strong>
+            <span>— Tanner &amp; Deidre</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
