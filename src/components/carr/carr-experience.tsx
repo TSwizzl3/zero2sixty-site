@@ -302,7 +302,7 @@ export function CarrExperience() {
             </button>
           </div>
           {infrastructureView === "parcel" ? (
-            <div className="carr-parcel-share reveal" role="tabpanel">
+            <div className="carr-parcel-share" role="tabpanel">
               <div className="primary">
                 <span>Working estimate for this parcel</span>
                 <strong>$55,000–$75,000</strong>
@@ -324,7 +324,7 @@ export function CarrExperience() {
               </aside>
             </div>
           ) : (
-            <div className="carr-engineering-total reveal" role="tabpanel">
+            <div className="carr-engineering-total" role="tabpanel">
               <div><span>JR preliminary estimate</span><strong>$506,203</strong><p>Shared construction and soft-cost planning estimate for the broader project.</p></div>
               <div><span>Later project projection</span><strong>$592,801</strong><p>Broader projection after additional engineering and utility-related costs.</p></div>
               <aside><strong>Not our individual bill</strong><p>These are whole-project figures. Our current estimated remaining share is $55,000–$75,000, subject to the final allocation and confirmation of transferred credits.</p></aside>
