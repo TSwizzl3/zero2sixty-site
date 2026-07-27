@@ -5,58 +5,69 @@ import { useEffect, useState } from "react";
 
 const sections = [
   { id: "overview", label: "Overview" },
-  { id: "opportunity", label: "Opportunity" },
+  { id: "decision", label: "Decision today" },
   { id: "property", label: "Property" },
   { id: "home", label: "The home" },
-  { id: "options", label: "Build options" },
+  { id: "infrastructure", label: "Infrastructure" },
   { id: "budget", label: "Budget" },
+  { id: "drainage", label: "Drainage" },
   { id: "timeline", label: "Timeline" },
-  { id: "risks", label: "Due diligence" },
-  { id: "plan", label: "Action plan" },
-  { id: "closing", label: "Closing" },
+  { id: "risks", label: "Unknowns" },
+  { id: "closing", label: "Conclusion" },
 ];
 
-const optionData = [
+const scenarios = [
   {
-    key: "A",
-    name: "Complete Forever Home",
-    price: "$368k–$429k",
-    time: "4–6 months",
-    note: "Best finished result",
-    description:
-      "Complete the home, attached garage, fence, full driveway and exterior work as one coordinated project.",
-    includes: ["Attached garage", "Privacy fence", "Full driveway", "Central air"],
+    key: "Optimistic",
+    site: "$85,000",
+    total: "$411,000",
+    tone: "Best documented outcome",
+    copy: "Shared costs allocate favorably, seller-paid work transfers, and lot-specific grading and connections remain straightforward.",
   },
   {
-    key: "B",
-    name: "Fastest Move-In",
-    price: "$298k–$331k",
-    time: "3.5–5 months",
-    note: "Recommended starting point",
-    description:
-      "Prioritize occupancy. Preserve the site plan for a future attached or detached garage and add the fence later.",
-    includes: ["Move-in ready home", "Basic driveway", "Central air", "Future garage plan"],
+    key: "Planning",
+    site: "$105,000",
+    total: "$436,000±",
+    tone: "Decision number",
+    copy: "The working case used for evaluating affordability today. It sits inside the current evidence-backed all-in range.",
     featured: true,
   },
   {
-    key: "C",
-    name: "Detached Garage Package",
-    price: "$358k–$419k",
-    time: "4–5.5 months",
-    note: "Balanced one-phase build",
-    description:
-      "Finish the property in one phase with a detached garage that reduces structural coordination and cost.",
-    includes: ["Detached garage", "Privacy fence", "Full driveway", "Central air"],
+    key: "Conservative",
+    site: "$125k–$150k+",
+    total: "$486,000+",
+    tone: "High-risk protection",
+    copy: "Contractor bids exceed engineering estimates, credits do not transfer, or the lot requires more drainage, grading, and fees.",
   },
 ];
 
-const timeline = [
-  ["01", "Due diligence", "Weeks 1–3", "Road, utilities, zoning, survey and site feasibility"],
-  ["02", "Close & order", "Weeks 3–4", "Cash closing, factory order and contractor scheduling"],
-  ["03", "Parallel build", "Weeks 4–12", "Factory production while permits and site work advance"],
-  ["04", "Set the home", "Weeks 11–13", "Delivery, permanent foundation and marriage-line work"],
-  ["05", "Connect & finish", "Weeks 12–17", "Utilities, HVAC, driveway, inspections and punch list"],
-  ["06", "Move in", "Weeks 16–20", "Certificate of occupancy and family move-in"],
+const budgetLines = [
+  ["Shared infrastructure contribution", "$55k–$75k", "Road, water and sewer mains; allocation not yet confirmed"],
+  ["Lot-specific preparation", "$30k–$45k", "Laterals, grading, detention feature, access and review allowances"],
+  ["Configured Mohican home", "$131,150", "Current configured home price"],
+  ["Delivery, set and finish", "$20k–$35k", "Transport, placement, marriage line and factory finish work"],
+  ["Permanent foundation", "$30k–$50k", "Engineered permanent foundation and related site work"],
+  ["Final utilities + HVAC", "$15k–$30k", "House connections, central air or heat pump, commissioning"],
+  ["Exterior completion", "$10k–$25k", "Entry, final driveway, skirting and exterior closeout"],
+  ["Additional contingency", "$20k–$30k", "Protection against bids, field conditions and scope gaps"],
+];
+
+const progress = [
+  ["Electrical upgrade", "Paid / complete", "complete"],
+  ["Gas plans + installation costs", "Paid", "complete"],
+  ["Water + sewer plans", "In review", "active"],
+  ["Road + drainage plans", "In review", "active"],
+  ["Construction pricing", "Pending approvals", "pending"],
+];
+
+const risks = [
+  ["Per-lot allocation", "Documents reference seven undeveloped lots but eight water/sewer service connections. The project manager must confirm the actual allocation method."],
+  ["Seller-paid credits", "Confirm in writing that prior contributions and completed utility work transfer with this parcel at closing."],
+  ["Tap + meter fees", "Water, sewer, meter, district, inspection and any system-development charges remain to be verified."],
+  ["Final contractor bids", "Engineering estimates are planning documents. Construction pricing will not be firm until approvals permit competitive bidding."],
+  ["Private drainage", "Each lot is expected to own and maintain its detention/water-quality feature; final grading and pond cost are lot-specific."],
+  ["Parcel identity", "The listing is 7873 S. Carr Court, while one supplied image appears to show 7893. Confirm the exact lot and legal description."],
+  ["Permits + reviews", "Jefferson County, fire access, floodplain, drainage, foundation and utility review fees require final confirmation."],
 ];
 
 function SectionHeading({
@@ -80,7 +91,6 @@ function SectionHeading({
 export function CarrExperience() {
   const [active, setActive] = useState("overview");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("B");
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver(
@@ -88,7 +98,7 @@ export function CarrExperience() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) entry.target.classList.add("is-visible");
         }),
-      { threshold: 0.14 }
+      { threshold: 0.12 }
     );
     document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
@@ -115,134 +125,74 @@ export function CarrExperience() {
     setMenuOpen(false);
   };
 
-  const lightSection = ["opportunity", "home", "options", "timeline", "risks"].includes(active);
+  const lightSection = ["decision", "home", "drainage", "timeline", "risks"].includes(active);
 
   return (
     <main className="carr-page">
-      <nav
-        className={`carr-nav ${lightSection ? "on-light" : ""}`}
-        aria-label="Project Carr Court"
-      >
+      <nav className={`carr-nav ${lightSection ? "on-light" : ""}`} aria-label="Project Carr Court">
         <button className="carr-wordmark" onClick={() => goTo("overview")}>
-          CARR <span>/ 01</span>
+          CARR <span>/ INVESTMENT ANALYSIS</span>
         </button>
         <div className={`carr-nav-links ${menuOpen ? "open" : ""}`}>
           {sections.slice(1, 7).map((item) => (
-            <button key={item.id} onClick={() => goTo(item.id)}>
-              {item.label}
-            </button>
+            <button key={item.id} onClick={() => goTo(item.id)}>{item.label}</button>
           ))}
         </div>
-        <button
-          className="carr-menu"
-          onClick={() => setMenuOpen((value) => !value)}
-          aria-expanded={menuOpen}
-          aria-label="Toggle section menu"
-        >
-          <i />
-          <i />
+        <button className="carr-menu" onClick={() => setMenuOpen((value) => !value)} aria-expanded={menuOpen} aria-label="Toggle section menu">
+          <i /><i />
         </button>
       </nav>
 
       <aside className="carr-progress" aria-label="Page progress">
         {sections.map((item, index) => (
-          <button
-            key={item.id}
-            className={active === item.id ? "active" : ""}
-            onClick={() => goTo(item.id)}
-            aria-label={`Go to ${item.label}`}
-          >
+          <button key={item.id} className={active === item.id ? "active" : ""} onClick={() => goTo(item.id)} aria-label={`Go to ${item.label}`}>
             <span>{String(index + 1).padStart(2, "0")}</span>
           </button>
         ))}
       </aside>
 
       <section id="overview" className="carr-hero">
-        <Image
-          src="/project-carr/carr-court-hero-v2.png"
-          alt="Concept rendering of the proposed Carr Court residence"
-          fill
-          priority
-          sizes="100vw"
-          className="carr-hero-image"
-        />
+        <Image src="/project-carr/carr-court-hero-v2.png" alt="Concept rendering of the proposed Carr Court residence" fill priority sizes="100vw" className="carr-hero-image" />
         <div className="carr-hero-shade" />
         <div className="carr-hero-content">
-          <p className="carr-kicker">Residential Development Proposal</p>
-          <h1>
-            Project
-            <br />
-            <em>Carr Court</em>
-          </h1>
-          <p className="carr-intro">
-            A thoughtful plan to create a permanent family home in Littleton,
-            Colorado.
-          </p>
+          <p className="carr-kicker">Engineering-backed residential investment analysis</p>
+          <h1>Project<br /><em>Carr Court</em></h1>
+          <p className="carr-intro">A corrected, evidence-led plan for developing a permanent family home in Littleton, Colorado.</p>
           <div className="carr-prepared">
-            <div>
-              <span>Prepared for</span>
-              <strong>Tom Marsh</strong>
-            </div>
-            <div>
-              <span>Prepared by</span>
-              <strong>Tanner &amp; Deidre</strong>
-            </div>
+            <div><span>Prepared for</span><strong>Tom Marsh</strong></div>
+            <div><span>Prepared by</span><strong>Tanner &amp; Deidre</strong></div>
           </div>
         </div>
-        <button className="carr-scroll" onClick={() => goTo("opportunity")}>
-          Explore the proposal <span>↓</span>
-        </button>
+        <button className="carr-scroll" onClick={() => goTo("decision")}>Review the analysis <span>↓</span></button>
         <span className="carr-concept-label">Conceptual rendering</span>
       </section>
 
-      <section id="opportunity" className="carr-section carr-overview">
+      <section id="decision" className="carr-section carr-overview">
         <div className="carr-wrap">
           <SectionHeading
-            eyebrow="The opportunity"
-            title="A new home. A clear plan. A lasting investment."
-            copy="Project Carr Court brings the land, home, essential site work and three build strategies into one understandable decision."
+            eyebrow="Decision today"
+            title="Is this project still worth pursuing?"
+            copy="Yes—if the planning case remains affordable and the unknowns below are resolved during due diligence. The earlier site-development estimate was too low. Engineering documents now support a more responsible range."
           />
-          <div className="carr-stats reveal">
-            {[
-              ["$80,000", "Land asking price"],
-              ["2,280", "Square feet"],
-              ["3 + 3", "Bedrooms + full bathrooms"],
-              ["100%", "Cash funded"],
-            ].map(([value, label]) => (
-              <div key={label}>
-                <strong>{value}</strong>
-                <span>{label}</span>
-              </div>
+          <div className="carr-correction reveal">
+            <span>Estimate correction</span>
+            <p>The proposal previously understated the cost of shared road and utility infrastructure, individual drainage work, and lot preparation. This analysis replaces those assumptions with figures grounded in JR Engineering documents and the project’s later budget projections.</p>
+          </div>
+          <div className="carr-scenario-grid reveal">
+            {scenarios.map((scenario) => (
+              <article key={scenario.key} className={scenario.featured ? "featured" : ""}>
+                <span>{scenario.key}</span>
+                <small>{scenario.tone}</small>
+                <div><label>Lot construction-ready</label><strong>{scenario.site}</strong></div>
+                <div><label>All-in with $80k land</label><strong>{scenario.total}</strong></div>
+                <p>{scenario.copy}</p>
+              </article>
             ))}
           </div>
-          <div className="carr-manifesto reveal">
-            <p>
-              The goal is not simply to buy another house. It is to create a
-              modern, energy-efficient home designed around our family while
-              making each construction decision carefully and transparently.
-            </p>
-            <div>
-              <span>Selected home</span>
-              <strong>Adventure Homes</strong>
-              <strong>Mojave Mohican 0763C</strong>
-            </div>
-          </div>
-          <div className="carr-status reveal">
-            <span>Project status</span>
-            {[
-              ["Property identified", "Complete"],
-              ["Home selected", "Complete"],
-              ["Preliminary options", "Complete"],
-              ["Road + utilities", "Awaiting verification"],
-              ["Dealer quote", "Awaiting final quote"],
-              ["Contractor bids", "Not started"],
-            ].map(([label, status]) => (
-              <div key={label}>
-                <i className={status === "Complete" ? "complete" : ""} />
-                <strong>{label}</strong>
-                <small>{status}</small>
-              </div>
-            ))}
+          <div className="carr-decision-banner reveal">
+            <div><span>Working site allowance</span><strong>$105,000</strong></div>
+            <div><span>Total excluding land</span><strong>$331k–$406k</strong></div>
+            <div><span>All-in including land</span><strong>$411k–$486k</strong></div>
           </div>
         </div>
       </section>
@@ -252,17 +202,10 @@ export function CarrExperience() {
           <div>
             <SectionHeading
               eyebrow="01 / The property"
-              title="A rare foothold in an established Littleton neighborhood."
-              copy="A 0.29-acre cul-de-sac lot with no HOA, R-1 zoning and reported pre-development work already underway."
+              title="A promising lot inside an active infrastructure project."
+              copy="The 0.29-acre R-1 parcel offers a Littleton location with no HOA and documented engineering progress—but it is not yet a finished, build-ready lot."
             />
-            <a
-              className="carr-text-link reveal"
-              href="https://www.zillow.com/homedetails/7873-S-Carr-Ct-Littleton-CO-80128/108379940_zpid/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View current listing ↗
-            </a>
+            <a className="carr-text-link reveal" href="https://www.zillow.com/homedetails/7873-S-Carr-Ct-Littleton-CO-80128/108379940_zpid/" target="_blank" rel="noreferrer">View current listing ↗</a>
           </div>
           <div className="carr-site-card reveal">
             <div className="carr-site-address">
@@ -271,478 +214,165 @@ export function CarrExperience() {
               <small>Littleton, Colorado 80128</small>
             </div>
             <div className="carr-lot-diagram" aria-label="Conceptual lot diagram">
-              <span className="road">Carr Court</span>
+              <span className="road">Carr Court extension</span>
               <div className="lot">
                 <div className="home-footprint">Residence</div>
                 <div className="garage-footprint">Garage</div>
                 <div className="yard-footprint">Private yard</div>
               </div>
-              <small>Concept only · final placement subject to engineering</small>
+              <small>Concept only · placement subject to survey, drainage and setbacks</small>
             </div>
             <div className="carr-property-facts">
-              {[
-                ["0.29 ac", "Lot size"],
-                ["R-1", "Zoning"],
-                ["None", "HOA"],
-                ["Public", "Water listed"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <strong>{value}</strong>
-                  <span>{label}</span>
-                </div>
+              {[["0.29 ac", "Lot size"], ["R-1", "Zoning"], ["None", "HOA"], ["$80k", "Asking price"]].map(([value, label]) => (
+                <div key={label}><strong>{value}</strong><span>{label}</span></div>
               ))}
             </div>
           </div>
         </div>
         <div className="carr-wrap carr-lot-gallery reveal">
-          <figure className="primary">
-            <Image src="/project-carr/real/lot-boundary.webp" alt="Aerial property boundary showing the approximate 106 by 117 foot Carr Court lot" fill sizes="(max-width: 900px) 100vw, 60vw" />
-            <figcaption>Approximate lot boundary · listing image</figcaption>
-          </figure>
-          <figure>
-            <Image src="/project-carr/real/lot-aerial.webp" alt="Aerial view of the Carr Court lot and neighboring homes" fill sizes="(max-width: 900px) 100vw, 40vw" />
-            <figcaption>Neighborhood context · listing image</figcaption>
-          </figure>
-          <figure>
-            <Image src="/project-carr/real/lot-context.webp" alt="Aerial view showing Carr Court access to Wadsworth Boulevard, C-470 and Santa Fe Drive" fill sizes="(max-width: 900px) 100vw, 40vw" />
-            <figcaption>Regional access · listing image</figcaption>
-          </figure>
+          <figure className="primary"><Image src="/project-carr/real/lot-boundary.webp" alt="Aerial property boundary for the proposed Carr Court lot" fill sizes="(max-width: 900px) 100vw, 60vw" /><figcaption>Approximate boundary · verify legal parcel</figcaption></figure>
+          <figure><Image src="/project-carr/real/lot-aerial.webp" alt="Aerial view of the Carr Court lot and neighboring homes" fill sizes="(max-width: 900px) 100vw, 40vw" /><figcaption>Neighborhood context</figcaption></figure>
+          <figure><Image src="/project-carr/real/lot-context.webp" alt="Regional access around Carr Court" fill sizes="(max-width: 900px) 100vw, 40vw" /><figcaption>Regional access</figcaption></figure>
         </div>
       </section>
 
       <section id="home" className="carr-section carr-home">
         <div className="carr-wrap">
-          <SectionHeading
-            eyebrow="02 / The home"
-            title="Space that lives like a traditional ranch."
-            copy="The Mohican combines generous common areas, three bedrooms and three full bathrooms in a 2,280-square-foot sectional home."
-          />
+          <SectionHeading eyebrow="02 / The home" title="The selected home remains a strong value." copy="The Mohican’s configured price is the most stable major number in the analysis. Site development—not the home itself—is the principal budget uncertainty." />
           <div className="carr-home-showcase reveal">
             <div className="carr-home-visual">
-              <Image
-                src="/project-carr/real/mohican-exterior-v2.png"
-                alt="Adventure Homes Mohican 0763C display exterior"
-                fill
-                sizes="(max-width: 900px) 100vw, 65vw"
-              />
+              <Image src="/project-carr/real/mohican-exterior-v2.png" alt="Adventure Homes Mohican 0763C display exterior" fill sizes="(max-width: 900px) 100vw, 65vw" />
               <span>Actual Mohican display home · Adventure Homes</span>
             </div>
             <div className="carr-home-specs">
-              <p>Mohican 0763C</p>
-              <h3>Designed for everyday life—and the years ahead.</h3>
+              <p>Mojave Mohican 0763C</p>
+              <h3>2,280 square feet configured around everyday family life.</h3>
               <ul>
-                <li><span>Living area</span><strong>2,280 sq. ft.</strong></li>
-                <li><span>Bedrooms</span><strong>3</strong></li>
-                <li><span>Full bathrooms</span><strong>3</strong></li>
+                <li><span>Bedrooms / bathrooms</span><strong>3 / 3</strong></li>
+                <li><span>Configured home price</span><strong>$131,150</strong></li>
                 <li><span>Foundation</span><strong>Permanent</strong></li>
-                <li><span>Base + selections</span><strong>$131,150</strong></li>
+                <li><span>Climate priority</span><strong>Central air / heat pump</strong></li>
               </ul>
-              <a
-                href="https://colorado-home-sales.buildtrove.com/deal"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Explore the model ↗
-              </a>
             </div>
           </div>
           <div className="carr-floorplan reveal">
-            <div>
-              <span>Actual model floor plan</span>
-              <h3>Open living at the center. Private bedrooms at each side.</h3>
-              <p>
-                The configured Mohican provides three bedrooms and three full
-                bathrooms, with generous common areas and separation between
-                the primary suite and secondary bedrooms.
-              </p>
-            </div>
-            <figure>
-              <Image
-                src="/project-carr/real/mohican-floorplan.webp"
-                alt="Adventure Homes Mohican 0763C floor plan"
-                width={1956}
-                height={777}
-                sizes="(max-width: 900px) 100vw, 72vw"
-              />
-            </figure>
+            <div><span>Actual model floor plan</span><h3>Open at the center. Private at each side.</h3><p>Final factory order, structural interfaces, utility locations and garage connection must be confirmed in writing before site engineering is completed.</p></div>
+            <figure><Image src="/project-carr/real/mohican-floorplan.webp" alt="Adventure Homes Mohican 0763C floor plan" width={1956} height={777} sizes="(max-width: 900px) 100vw, 72vw" /></figure>
           </div>
           <div className="carr-room-gallery reveal">
             {[
-              ["/project-carr/real/kitchen-wide.webp", "Kitchen", "Hardwood cabinetry · stainless appliances"],
-              ["/project-carr/real/kitchen-island.webp", "Island", "Large gathering and preparation space"],
-              ["/project-carr/real/living-room.webp", "Living room", "Bright, open everyday living"],
-              ["/project-carr/real/primary-bedroom.webp", "Primary suite", "Tray ceiling and bathroom access"],
-              ["/project-carr/real/bathroom.webp", "Primary bathroom", "Double vanity and tiled shower"],
-              ["/project-carr/real/dining.webp", "Dining room", "Dedicated dining with natural light"],
-            ].map(([src, title, detail]) => (
-              <figure key={src}>
-                <Image src={src} alt={`${title} in the Adventure Homes Mohican display model`} fill sizes="(max-width: 700px) 100vw, 33vw" />
-                <figcaption><strong>{title}</strong><span>{detail}</span></figcaption>
-              </figure>
-            ))}
-          </div>
-          <p className="carr-photo-note reveal">
-            Manufacturer display photography illustrates the Mohican layout and
-            available finishes. Final selections and included features remain
-            subject to the written dealer order.
-          </p>
-          <div className="carr-finish-grid reveal">
-            {[
-              ["Spruce", "Upgraded siding", "#243a32"],
-              ["Architectural", "Black shingles", "#202326"],
-              ["Hardwood", "Cabinetry", "#856f52"],
-              ["Stainless", "Appliances", "#b7b9b6"],
-              ["Glass tile", "Backsplash", "#d8d4c8"],
-              ["Central air", "Initial-build priority", "#6b8790"],
-            ].map(([title, label, color]) => (
-              <div key={title}>
-                <i style={{ background: color }} />
-                <strong>{title}</strong>
-                <span>{label}</span>
-              </div>
+              ["/project-carr/real/kitchen-wide.webp", "Kitchen"],
+              ["/project-carr/real/living-room.webp", "Living room"],
+              ["/project-carr/real/primary-bedroom.webp", "Primary suite"],
+            ].map(([src, title]) => (
+              <figure key={src}><Image src={src} alt={`${title} in the Adventure Homes Mohican display model`} fill sizes="(max-width: 700px) 100vw, 33vw" /><figcaption><strong>{title}</strong><span>Manufacturer display photography</span></figcaption></figure>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="options" className="carr-section carr-options">
+      <section id="infrastructure" className="carr-section carr-infrastructure">
         <div className="carr-wrap">
           <SectionHeading
-            eyebrow="03 / Three paths"
-            title="Choose the right balance of speed, completeness and cost."
-            copy="All three options include the land, configured home, permanent foundation, essential site work and central air."
+            eyebrow="03 / Shared infrastructure"
+            title="The project is real, engineered—and still awaiting final pricing."
+            copy="JR Engineering prepared road, water, sewer and drainage work for the broader development. Those plans materially reduce uncertainty, but the final construction cost and each parcel’s share are not yet fixed."
           />
-          <div className="carr-interaction-hint reveal">
-            <span>Interactive comparison</span>
-            <strong>Select each option to view its complete scope, price and timeline.</strong>
-            <i>↓</i>
+          <div className="carr-engineering-total reveal">
+            <div><span>JR preliminary estimate</span><strong>$506,203</strong><p>Shared construction and soft-cost planning estimate.</p></div>
+            <div><span>Later project projection</span><strong>$592,801</strong><p>Broader projection after additional engineering and utility-related costs.</p></div>
+            <aside><strong>Allocation unresolved</strong><p>Documents describe seven undeveloped lots and also show eight service connections. A simple division produces materially different shares and may not reflect credits already paid.</p></aside>
           </div>
-          <div className="carr-option-tabs reveal" role="tablist">
-            {optionData.map((option) => (
-              <button
-                key={option.key}
-                role="tab"
-                aria-selected={selectedOption === option.key}
-                onClick={() => setSelectedOption(option.key)}
-                className={selectedOption === option.key ? "active" : ""}
-              >
-                <span>Option {option.key} · Click to explore</span>
-                <strong>{option.name}</strong>
-                <i aria-hidden="true">→</i>
-              </button>
+          <div className="carr-progress-board reveal">
+            {progress.map(([label, status, state]) => (
+              <article key={label}><i className={state} /><div><strong>{label}</strong><span>{status}</span></div></article>
             ))}
           </div>
-          {optionData.map((option) => (
-            <article
-              key={option.key}
-              className={`carr-option-detail ${selectedOption === option.key ? "active" : ""}`}
-              role="tabpanel"
-            >
-              <div>
-                <span>{option.note}</span>
-                <h3>{option.name}</h3>
-                <p>{option.description}</p>
-              </div>
-              <div className="carr-option-numbers">
-                <div><span>Planning range</span><strong>{option.price}</strong></div>
-                <div><span>Target move-in</span><strong>{option.time}</strong></div>
-              </div>
-              <ul>
-                {option.includes.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </article>
-          ))}
-          <div className="carr-decision-matrix reveal">
-            <div className="matrix-title">
-              <span>Decision matrix</span>
-              <strong>How the three approaches compare</strong>
-            </div>
-            <div className="matrix-row matrix-head">
-              <span>Priority</span><span>A · Attached</span><span>B · Later</span><span>C · Detached</span>
-            </div>
-            {[
-              ["Initial investment", "Highest", "Lowest", "Middle"],
-              ["Move-in speed", "4–6 mo.", "3.5–5 mo.", "4–5.5 mo."],
-              ["Finished on day one", "Yes", "No", "Yes"],
-              ["Future flexibility", "Moderate", "Highest", "High"],
-              ["Construction complexity", "Highest", "Lowest", "Moderate"],
-              ["Traditional resale appeal", "Highest", "Flexible", "Strong"],
-            ].map((row) => (
-              <div className="matrix-row" key={row[0]}>
-                {row.map((cell) => <span key={cell}>{cell}</span>)}
-              </div>
-            ))}
+          <div className="carr-source-note reveal">
+            <span>What the documents support</span>
+            <p>Electrical work is described as paid and complete. Gas planning and installation costs are described as paid. Water/sewer and road/drainage plans remain in review. Construction bids are expected after approvals.</p>
           </div>
         </div>
       </section>
 
       <section id="budget" className="carr-section carr-budget">
         <div className="carr-wrap">
-          <SectionHeading
-            eyebrow="04 / Financial overview"
-            title="A planning guide—not a promise."
-            copy="The figures below organize the known pricing and current allowances. Contractor bids, utility costs and engineering will replace allowances before a final commitment."
-          />
-          <div className="carr-budget-grid reveal">
-            <div className="carr-budget-bars">
-              {[
-                ["Land", "$80,000", 24],
-                ["Configured home", "$131,150", 39],
-                ["Delivery + fees", "$16,780", 5],
-                ["Foundation + set", "$28k–$37k", 10],
-                ["Site + grading", "$8k–$12k", 4],
-                ["Utility connections", "$10k–$18k", 5],
-                ["Permits + engineering", "$5k–$8k", 2],
-                ["Central air", "$5.9k–$8k", 2],
-                ["Basic entry + drive", "$5k–$8k", 2],
-                ["Contingency", "$8k–$12k", 3],
-              ].map(([label, value, width]) => (
-                <div key={label as string}>
-                  <span>{label}</span>
-                  <i><b style={{ width: `${width}%` }} /></i>
-                  <strong>{value}</strong>
-                </div>
-              ))}
-            </div>
-            <div className="carr-budget-total">
-              <span>Option B working target</span>
-              <strong>≈ $318,000</strong>
-              <p>
-                Fastest move-in with an attached or detached garage and fence
-                planned for a later phase.
-              </p>
-              <small>Feasibility range: approximately $298,000–$331,000.</small>
-            </div>
-          </div>
-          <div className="carr-all-option-costs reveal">
-            {optionData.map((option) => (
-              <article key={option.key} className={option.featured ? "featured" : ""}>
-                <span>Option {option.key}</span>
-                <h3>{option.name}</h3>
-                <strong>{option.price}</strong>
-                <small>{option.time} target</small>
-              </article>
+          <SectionHeading eyebrow="04 / Corrected financial overview" title="Build the decision from the ground up." copy="Land is shown separately. The ranges below distinguish shared work from lot-specific preparation and the house itself, making the remaining uncertainty visible instead of hiding it in one allowance." />
+          <div className="carr-budget-table reveal">
+            <div className="budget-head"><span>Cost category</span><span>Working range</span><span>What it covers</span></div>
+            {budgetLines.map(([label, value, detail]) => (
+              <div key={label}><strong>{label}</strong><b>{value}</b><span>{detail}</span></div>
             ))}
           </div>
-          <div className="carr-assumptions reveal">
-            <span>Key assumptions</span>
-            <p>
-              $80,000 land price · $131,150 configured home · Denver-area
-              delivery based on the prior $16,780 Cortland quote · utilities
-              reachable from planned adjacent infrastructure · simple permanent
-              foundation and set · no extraordinary floodplain, retaining, soil
-              or road costs.
-            </p>
+          <div className="carr-budget-summary reveal">
+            <article><span>Site construction-ready</span><strong>$85k–$120k</strong><p>$105,000 planning case</p></article>
+            <article><span>Project excluding land</span><strong>$331k–$406k</strong><p>Home through move-in readiness</p></article>
+            <article className="featured"><span>All-in including $80k land</span><strong>$411k–$486k</strong><p>Current decision range</p></article>
           </div>
-          <div className="carr-range-explainer reveal">
-            <article>
-              <span>Lean feasible case</span>
-              <strong>≈ $298,000</strong>
-              <p>Competitive bids, simple site work, low utility share and an $8,000 contingency. This is where the earlier $296,000 example was aiming, but it leaves little room for surprises.</p>
-            </article>
-            <article className="featured">
-              <span>Working target</span>
-              <strong>≈ $318,000</strong>
-              <p>The original proposal target remains credible if the shared infrastructure keeps utility costs controlled and the foundation/site package bids well.</p>
-            </article>
-            <article>
-              <span>Protected case</span>
-              <strong>≈ $331,000</strong>
-              <p>Higher ends of the current allowances with a $12,000 contingency, while still excluding a garage, fence and full landscaping.</p>
-            </article>
+          <p className="carr-budget-disclaimer reveal">Planning analysis only—not a bid, appraisal, guarantee, or authorization to proceed. Final commitments should follow written allocation confirmation, utility fee verification, site-specific engineering, dealer scope, and competitive contractor pricing.</p>
+        </div>
+      </section>
+
+      <section id="drainage" className="carr-section carr-drainage">
+        <div className="carr-wrap">
+          <SectionHeading eyebrow="05 / Drainage + floodplain" title="The mapped floodplain appears limited. Private drainage is the larger practical issue." copy="The documents indicate most of the site is in Zone X. Only a small 72-square-foot portion of Lot 20 is identified in Zone AE, with no planned home development in the 100-year floodplain." />
+          <div className="carr-drainage-grid reveal">
+            <article><span>Zone X</span><strong>Most of the site</strong><p>The proposed residential development is planned outside the mapped 100-year floodplain.</p></article>
+            <article><span>Zone AE</span><strong>72 sq. ft.</strong><p>A small portion of Lot 20 is identified in the floodplain and is intended to remain undisturbed.</p></article>
+            <article className="featured"><span>Owner responsibility</span><strong>Private detention / water quality</strong><p>Each lot is expected to include and maintain its own drainage feature, making final grading and maintenance a homeowner obligation.</p></article>
           </div>
-          <div className="carr-budget-notes reveal">
-            <div>
-              <span>Known pricing</span>
-              <p>Land asking price: $80,000. Configured Mohican: $131,150. Prior Denver-area Cortland transport, factory and state-fee quote: $16,780.</p>
-            </div>
-            <div>
-              <span>Still allowances</span>
-              <p>Foundation, home set, grading, utility connections, permits, central air, basic driveway and contingency remain planning figures until written bids arrive. Jefferson County states that unincorporated Jeffco does not charge use tax.</p>
-            </div>
-            <div>
-              <span>Cash strategy</span>
-              <p>Request cash pricing and priority scheduling, but use milestone payments, inspections and lien waivers rather than paying contractors fully in advance.</p>
-            </div>
-          </div>
+          <div className="carr-caution reveal"><strong>Important:</strong><p>These findings describe the project documents, not a parcel-specific legal or engineering opinion. Confirm the selected parcel, current FEMA mapping, finished-floor elevations, drainage easements, and final civil design before purchase.</p></div>
         </div>
       </section>
 
       <section id="timeline" className="carr-section carr-timeline">
         <div className="carr-wrap">
-          <SectionHeading
-            eyebrow="05 / Fast-track schedule"
-            title="Work in parallel. Move in sooner."
-            copy="Cash funding removes lender underwriting and draw schedules. The greatest time savings comes from advancing site work while the home is being built."
-          />
-          <div className="carr-timeline-list">
-            {timeline.map(([number, title, timing, detail]) => (
-              <div className="reveal" key={number}>
-                <span>{number}</span>
-                <h3>{title}</h3>
-                <strong>{timing}</strong>
-                <p>{detail}</p>
-              </div>
+          <SectionHeading eyebrow="06 / Fast-track path" title="Approvals and bids now control the schedule." copy="Cash removes lender delay, but it does not remove civil approvals, utility coordination, factory lead time, inspections, or contractor availability." />
+          <div className="carr-timeline-list reveal">
+            {[
+              ["01", "Confirm before contract", "Immediate", "Legal parcel, contribution history, transferable credits, utility fee status and seller documents"],
+              ["02", "Project-manager meeting", "Under contract", "Confirm per-lot allocation, approvals, remaining scope, schedule and bid strategy"],
+              ["03", "Site + home engineering", "Parallel", "Finalize home placement, foundation, drainage feature, utility laterals and garage strategy"],
+              ["04", "Competitive pricing", "After approvals", "Obtain written bids for shared work, lot preparation, foundation, delivery/set and final connections"],
+              ["05", "Factory + field work", "Overlapped", "Build the home while road, utilities, grading and foundation work advance"],
+              ["06", "Set, connect, inspect", "Final phase", "Deliver, finish, commission HVAC, complete exterior access and secure occupancy approval"],
+            ].map(([num, title, time, detail]) => (
+              <div key={num}><span>{num}</span><h3>{title}</h3><strong>{time}</strong><p>{detail}</p></div>
             ))}
           </div>
-          <div className="carr-timeline-callout reveal">
-            <span>Fastest realistic occupancy</span>
-            <strong>Approximately 16–20 weeks</strong>
-            <p>Subject to permits, road and utility readiness, factory lead time, weather and inspections.</p>
-          </div>
-          <div className="carr-option-timelines reveal">
-            <article>
-              <span>Option A</span>
-              <strong>4–6 months</strong>
-              <p>Permit the attached garage with the home and overlap its foundation, framing and electrical work with home completion.</p>
-            </article>
-            <article className="featured">
-              <span>Option B</span>
-              <strong>3.5–5 months</strong>
-              <p>Fastest occupancy. Complete only what the certificate of occupancy requires, while preserving space and utility stubs for either future garage type.</p>
-            </article>
-            <article>
-              <span>Option C</span>
-              <strong>4–5.5 months</strong>
-              <p>Build the detached garage alongside home finish work without tying its roof or structure into the residence.</p>
-            </article>
-          </div>
+          <div className="carr-timeline-callout reveal"><span>Schedule position</span><strong>4–6 months remains an aspirational build window after approvals and site readiness—not a current promise.</strong></div>
         </div>
       </section>
 
       <section id="risks" className="carr-section carr-risks">
         <div className="carr-wrap">
-          <SectionHeading
-            eyebrow="06 / Due diligence"
-            title="Resolve the expensive unknowns before committing."
-            copy="The opportunity is compelling because the price is low. That makes verification—not optimism—the right next move."
-          />
+          <SectionHeading eyebrow="07 / Risks + unknowns" title="Seven answers determine whether the planning case holds." copy="Each item below should be resolved in writing or priced before the project is presented as fully committed." />
           <div className="carr-risk-grid reveal">
-            {[
-              ["Road & access", "Confirm the final approach, easements, schedule and each owner's remaining share."],
-              ["Utilities", "Obtain written tap, extension and connection costs for water, sewer, electric and gas."],
-              ["Floodplain", "Review the current map, permit and buildable-envelope documentation—not verbal confirmation alone."],
-              ["Home eligibility", "Confirm HUD or modular acceptance, design standards, setbacks and garage attachment rules."],
-              ["Site engineering", "Review survey, drainage, soils and foundation requirements before ordering the home."],
-              ["Contract scope", "Define who owns delivery, set, marriage-line finish, HVAC, inspections and warranty handoff."],
-            ].map(([title, copy], index) => (
-              <article key={title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
+            {risks.map(([title, copy], index) => (
+              <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{copy}</p></article>
             ))}
           </div>
-          <div className="carr-responsibility reveal">
-            <SectionHeading
-              eyebrow="Who does what"
-              title="One coordinated scope. Clear accountability."
-            />
-            <div>
-              {[
-                ["Colorado Home Sales", "Final home configuration, factory order, transport scope, manufacturer documents and warranty handoff."],
-                ["Site / general contractor", "Permit coordination, excavation, grading, foundation, drainage, utility trenching and site sequencing."],
-                ["Set crew", "Placement, anchoring, marriage-line completion, exterior close-up and required installation certifications."],
-                ["Licensed trades", "Water, sewer, electrical service, central air or heat pump, testing and trade inspections."],
-                ["Garage + exterior team", "Garage, driveway, fence, steps, walkways and final exterior finish for Options A or C."],
-                ["Tanner & Deidre", "Selections, approvals, budget tracking, milestone payments, documentation and communication with Tom."],
-              ].map(([title, copy]) => (
-                <article key={title}>
-                  <strong>{title}</strong>
-                  <p>{copy}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="plan" className="carr-section carr-plan">
-        <div className="carr-wrap">
-          <SectionHeading
-            eyebrow="07 / Complete action plan"
-            title="Include the hard-to-retrofit upgrades. Verify everything else."
-            copy="The initial build should cover comfort, infrastructure and future readiness. Cosmetic additions can wait."
-          />
-          <div className="carr-upgrades reveal">
-            <div>
-              <span>Include now</span>
-              <ul>
-                <li>High-efficiency central air or heat pump</li>
-                <li>Smart thermostat and complete commissioning</li>
-                <li>200-amp service confirmation</li>
-                <li>Whole-home surge protection</li>
-                <li>CAT6 wiring to key rooms</li>
-                <li>Exterior outlets and hose bibs</li>
-                <li>Garage or future-garage EV circuit</li>
-                <li>Garage-ready drainage and site placement</li>
-              </ul>
-            </div>
-            <div>
-              <span>Selected home finishes</span>
-              <ul>
-                <li>Upgraded spruce-green vinyl siding</li>
-                <li>Black architectural shingles</li>
-                <li>White trim and black shutters</li>
-                <li>Hardwood cabinetry</li>
-                <li>Glass tile backsplash</li>
-                <li>Stainless appliance package</li>
-                <li>Fiberglass tub with upgraded tile walls</li>
-                <li>Wild Dove flooring and Camelback carpet</li>
-              </ul>
-            </div>
-          </div>
-          <div className="carr-investment reveal">
-            <div>
-              <span>Why it is worth considering</span>
-              <h3>New construction at a planning cost below the listing’s stated $600k–$700k neighborhood range.</h3>
-            </div>
-            <div>
-              <p>Modern systems and manufacturer warranties</p>
-              <p>No HOA and flexible future improvements</p>
-              <p>Lower expected maintenance than many older homes</p>
-              <p>Potential equity—but no guaranteed completed value</p>
-            </div>
-          </div>
-          <div className="carr-next-steps reveal">
-            <span>Next steps before any commitment</span>
-            {[
-              ["01", "Collect the seller package", "Road plan, shared-infrastructure budget, surveys, drainage work, permits and floodplain documents."],
-              ["02", "Confirm county feasibility", "Manufactured or modular eligibility, setbacks, garage attachment, buildable envelope and certificate-of-occupancy requirements."],
-              ["03", "Obtain the dealer quote", "Exact Mohican selections, delivery, state and factory fees, set scope, central-air options and warranties."],
-              ["04", "Bid the complete site scope", "Foundation, grading, utilities, driveway, steps, garage and fence—with exclusions clearly stated."],
-              ["05", "Replace every allowance", "Build the final cash budget, contingency and milestone-payment schedule before buying land or ordering the home."],
-            ].map(([number, title, copy]) => (
-              <article key={number}>
-                <span>{number}</span>
-                <div><strong>{title}</strong><p>{copy}</p></div>
-              </article>
-            ))}
+          <div className="carr-gates reveal">
+            <span>Proceed only after</span>
+            <ol>
+              <li>Confirm the exact parcel and legal description.</li>
+              <li>Receive a written per-lot infrastructure statement and credit ledger.</li>
+              <li>Verify all tap, meter, district and permit fees.</li>
+              <li>Obtain dealer and site-contractor scopes that close every move-in gap.</li>
+              <li>Protect the purchase with appropriate due-diligence and feasibility terms.</li>
+            </ol>
           </div>
         </div>
       </section>
 
       <section id="closing" className="carr-closing">
-        <Image
-          src="/project-carr/carr-court-hero-v2.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="carr-closing-image"
-        />
+        <Image src="/project-carr/carr-court-hero-v2.png" alt="" fill sizes="100vw" className="carr-hero-image" />
         <div className="carr-closing-shade" />
         <div className="carr-closing-content reveal">
-          <span>Our commitment</span>
-          <h2>A home built with care. An investment handled with respect.</h2>
-          <p>
-            If given the opportunity to move forward, we are committed to
-            treating every dollar thoughtfully, communicating openly and
-            validating the important details before decisions are made.
-          </p>
-          <div>
-            <strong>Thank you for considering Project Carr Court.</strong>
-            <span>— Tanner &amp; Deidre</span>
-          </div>
+          <span className="carr-kicker">Investment conclusion</span>
+          <h2>A promising project—at a corrected price.</h2>
+          <p>Project Carr Court remains worth investigating, but the decision should be based on an all-in range of approximately <strong>$411,000–$486,000</strong>, not the earlier lower estimate. The responsible next step is to verify the lot allocation and transferable credits before treating the $105,000 site allowance as dependable.</p>
+          <div><strong>Prepared for Tom Marsh</strong><span>with care by Tanner &amp; Deidre</span></div>
         </div>
       </section>
     </main>

@@ -3,9 +3,9 @@ import { CarrExperience } from "@/components/carr/carr-experience";
 import "./project-carr.css";
 
 export const metadata: Metadata = {
-  title: "Project Carr Court | Residential Development Proposal",
+  title: "Project Carr Court | Engineering-Backed Investment Analysis",
   description:
-    "A private residential development proposal prepared for Tom Marsh by Tanner and Deidre.",
+    "A private, engineering-backed residential investment analysis prepared for Tom Marsh by Tanner and Deidre.",
   robots: { index: false, follow: false },
 };
 
