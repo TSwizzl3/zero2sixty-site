@@ -91,6 +91,7 @@ function SectionHeading({
 export function CarrExperience() {
   const [active, setActive] = useState("overview");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [infrastructureView, setInfrastructureView] = useState<"project" | "parcel">("parcel");
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver(
@@ -278,11 +279,57 @@ export function CarrExperience() {
             title="The project is real, engineered—and still awaiting final pricing."
             copy="JR Engineering prepared road, water, sewer and drainage work for the broader development. Those plans materially reduce uncertainty, but the final construction cost and each parcel’s share are not yet fixed."
           />
-          <div className="carr-engineering-total reveal">
-            <div><span>JR preliminary estimate</span><strong>$506,203</strong><p>Shared construction and soft-cost planning estimate.</p></div>
-            <div><span>Later project projection</span><strong>$592,801</strong><p>Broader projection after additional engineering and utility-related costs.</p></div>
-            <aside><strong>Allocation unresolved</strong><p>Documents describe seven undeveloped lots and also show eight service connections. A simple division produces materially different shares and may not reflect credits already paid.</p></aside>
+          <div className="carr-infrastructure-tabs reveal" role="tablist" aria-label="Infrastructure cost view">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={infrastructureView === "parcel"}
+              className={infrastructureView === "parcel" ? "active" : ""}
+              onClick={() => setInfrastructureView("parcel")}
+            >
+              <span>Most relevant</span>
+              <strong>Our Estimated Portion</strong>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={infrastructureView === "project"}
+              className={infrastructureView === "project" ? "active" : ""}
+              onClick={() => setInfrastructureView("project")}
+            >
+              <span>Reference</span>
+              <strong>Entire Shared Project</strong>
+            </button>
           </div>
+          {infrastructureView === "parcel" ? (
+            <div className="carr-parcel-share reveal" role="tabpanel">
+              <div className="primary">
+                <span>Working estimate for this parcel</span>
+                <strong>$55,000–$75,000</strong>
+                <p>Estimated remaining contribution to shared road, water and sewer infrastructure—not the full project cost.</p>
+              </div>
+              <div>
+                <span>If divided by 8 services</span>
+                <strong>$74,100</strong>
+                <p>Simple gross allocation of the later $592,801 projection before seller-paid credits.</p>
+              </div>
+              <div>
+                <span>If divided by 7 lots</span>
+                <strong>$84,686</strong>
+                <p>Simple gross allocation before credits. The documents do not yet confirm which method applies.</p>
+              </div>
+              <aside>
+                <strong>Why the planning range is lower than the simple division</strong>
+                <p>Approximately $154,460 is described as already spent across engineering, electrical, gas, studies and permits. The $55,000–$75,000 range assumes the seller’s paid contributions transfer with this lot. That transfer must be confirmed in writing.</p>
+              </aside>
+            </div>
+          ) : (
+            <div className="carr-engineering-total reveal" role="tabpanel">
+              <div><span>JR preliminary estimate</span><strong>$506,203</strong><p>Shared construction and soft-cost planning estimate for the broader project.</p></div>
+              <div><span>Later project projection</span><strong>$592,801</strong><p>Broader projection after additional engineering and utility-related costs.</p></div>
+              <aside><strong>Not our individual bill</strong><p>These are whole-project figures. Our current estimated remaining share is $55,000–$75,000, subject to the final allocation and confirmation of transferred credits.</p></aside>
+            </div>
+          )}
           <div className="carr-progress-board reveal">
             {progress.map(([label, status, state]) => (
               <article key={label}><i className={state} /><div><strong>{label}</strong><span>{status}</span></div></article>

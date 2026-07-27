@@ -594,7 +594,28 @@ body:has(.carr-page) {
 
 .carr-infrastructure { color: white; background: #17261f; }
 .carr-infrastructure .carr-heading p { color: rgba(255,255,255,.7); }
+.carr-infrastructure-tabs { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; margin-top: 4rem; padding: 1px; background: rgba(255,255,255,.14); }
+.carr-infrastructure-tabs button { padding: 1.4rem 1.6rem; border: 0; color: white; background: #20342b; cursor: pointer; text-align: left; transition: background .25s, box-shadow .25s; }
+.carr-infrastructure-tabs button:hover { background: #294237; }
+.carr-infrastructure-tabs button.active { background: #304c3f; box-shadow: inset 0 3px var(--brass); }
+.carr-infrastructure-tabs span,
+.carr-infrastructure-tabs strong { display: block; }
+.carr-infrastructure-tabs span { color: var(--brass); font-size: .6rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+.carr-infrastructure-tabs strong { margin-top: .45rem; font-family: "Manrope"; font-size: .92rem; font-weight: 500; }
+.carr-parcel-share { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 1px; background: rgba(255,255,255,.12); }
+.carr-parcel-share > div,
+.carr-parcel-share aside { padding: clamp(1.6rem,3vw,2.5rem); background: #20342b; }
+.carr-parcel-share > div.primary { background: #304c3f; box-shadow: inset 0 3px var(--brass); }
+.carr-parcel-share aside { grid-column: 1 / -1; display: grid; grid-template-columns: 280px 1fr; gap: 2rem; color: var(--ink); background: #e9e3d9; }
+.carr-parcel-share span,
+.carr-parcel-share strong { display: block; }
+.carr-parcel-share span { color: var(--brass); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+.carr-parcel-share > div > strong { margin-top: .8rem; font-family: "Manrope"; font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 300; }
+.carr-parcel-share p { color: rgba(255,255,255,.52); font-size: .7rem; line-height: 1.7; }
+.carr-parcel-share aside strong { font-family: "Manrope"; font-size: 1rem; font-weight: 600; line-height: 1.45; }
+.carr-parcel-share aside p { margin: 0; color: #626b64; }
 .carr-engineering-total { display: grid; grid-template-columns: 1fr 1fr 1.1fr; gap: 1px; margin-top: 4rem; background: rgba(255,255,255,.12); }
+.carr-infrastructure-tabs + .carr-engineering-total { margin-top: 0; }
 .carr-engineering-total > div,
 .carr-engineering-total aside { padding: clamp(1.6rem,3vw,2.5rem); background: #20342b; }
 .carr-engineering-total aside { background: #e9e3d9; color: var(--ink); }
@@ -659,6 +680,8 @@ body:has(.carr-page) {
   .carr-budget-summary,
   .carr-drainage-grid { grid-template-columns: 1fr; }
   .carr-progress-board { grid-template-columns: repeat(2,1fr); }
+  .carr-parcel-share { grid-template-columns: 1fr; }
+  .carr-parcel-share aside { grid-column: auto; grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -669,6 +692,7 @@ body:has(.carr-page) {
   .carr-decision-banner { grid-template-columns: 1fr; }
   .carr-decision-banner div { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
   .carr-progress-board { grid-template-columns: 1fr; }
+  .carr-infrastructure-tabs { grid-template-columns: 1fr; }
   .carr-budget-table > div { grid-template-columns: 1fr .65fr; }
   .carr-budget-table > div > *:last-child { grid-column: 1 / -1; }
   .carr-budget-table .budget-head > span:last-child { display: none; }
